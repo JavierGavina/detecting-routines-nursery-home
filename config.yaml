@@ -1,0 +1,95 @@
+data_dir: data
+users:
+  - 02A8
+  - 402E
+  - 52EA
+  - 682A
+  - 9FE9
+  - F176
+dificulties:
+  - easy
+  - medium
+  - hard
+rooms:
+  - TV Room
+  - Living Room
+  - Therapy Room
+  - Gym
+  - Corridor
+  - Terrace
+  - Dinning Room
+  - Room
+colors:
+  TV Room:
+    - 255
+    - 0
+    - 0
+  Living Room:
+    - 0
+    - 255
+    - 0
+  Therapy Room:
+    - 0
+    - 0
+    - 255
+  Gym:
+    - 255
+    - 255
+    - 0
+  Corridor:
+    - 128
+    - 0
+    - 128
+  Terrace:
+    - 0
+    - 255
+    - 255
+  Dinning Room:
+    - 255
+    - 165
+    - 0
+  Room:
+    - 144
+    - 238
+    - 144
+params:
+  Room:
+    length_range:
+      - 3
+      - 100
+    R: 1
+    C: 30
+    G: 8
+    L: 1
+    epsilon: 0.5
+    fusion_distance: 0.001
+  other:
+    length_range:
+      - 3
+      - 100
+    R: 3
+    C: 6
+    G: 8
+    L: 1
+    epsilon: 0.5
+    fusion_distance: 0.001
+intervals_of_interest:
+  9FE9:
+    -
+      - 10:15
+      - 11:29
+    -
+      - 11:30
+      - 13:00
+    -
+      - 13:30
+      - 14:59
+    -
+      - 15:00
+      - 16:20
+    -
+      - 16:45
+      - 17:59
+    -
+      - 18:00
+      - 19:30
