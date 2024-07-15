@@ -74,20 +74,26 @@ params:
 intervals_of_interest:
   9FE9:
     -
-      - 10:15
-      - 11:29
+      duration_time: 90
+      start: 10:15
+      end: 11:29
     -
-      - 11:30
-      - 13:00
+      duration_time: 105
+      start: 11:30
+      end: 13:00
     -
-      - 13:30
-      - 14:59
+      duration_time: 105
+      start: 13:30
+      end: 14:59
     -
-      - 15:00
-      - 16:20
+      duration_time: 90
+      start: 15:00
+      end: 16:15
     -
-      - 16:45
-      - 17:59
+      duration_time: 90
+      start: 16:45
+      end: 17:59
     -
-      - 18:00
-      - 19:30
+      duration_time: 105
+      start: 18:00
+      end: 19:30
