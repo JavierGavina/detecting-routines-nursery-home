@@ -152,8 +152,8 @@ class DRFL:
         for key, value in kwargs.items():
             # Check if length range is a tuple of two integers
             if key == "length_range":
-                if not isinstance(value, tuple):
-                    raise TypeError(f"length_range must be a tuple. Got {type(value).__name__} instead")
+                if not isinstance(value, (tuple, list)):
+                    raise TypeError(f"length_range must be a tuple or list. Got {type(value).__name__} instead")
 
                 if len(value) != 2:
                     raise ValueError(f"length_range must be a tuple with two values. Got {len(value)} instead")
@@ -1026,10 +1026,19 @@ class DRFL:
             The `Routines` object provides methods and properties to further explore and manipulate the discovered routines.
         """
 
-        if not self.__already_fitted:
+        if not self.is_fitted():
             raise RuntimeError("The model has not been fitted yet. Please call the fit method before using this method")
 
         return self.__routines
+
+    def is_fitted(self) -> bool:
+        """
+        Returns a boolean indicating whether the model has been fitted to the time series data.
+
+        Returns:
+            `bool`. `True` if the model has been fitted, `False` otherwise.
+        """
+        return self.__already_fitted
 
     def plot_results(self, title_fontsize: int = 20,
                      xticks_fontsize: int = 20, yticks_fontsize: int = 20,

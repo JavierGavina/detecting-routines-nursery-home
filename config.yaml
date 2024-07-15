@@ -1,4 +1,5 @@
 data_dir: data
+results_dir: results
 users:
   - 02A8
   - 402E
@@ -12,12 +13,9 @@ dificulties:
   - hard
 rooms:
   - TV Room
-  - Living Room
   - Therapy Room
   - Gym
-  - Corridor
   - Terrace
-  - Dinning Room
   - Room
 colors:
   TV Room:
