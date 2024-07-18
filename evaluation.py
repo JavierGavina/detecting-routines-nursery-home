@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Union
 
 import pandas as pd
 import numpy as np
@@ -9,6 +9,7 @@ from src.DRFL import DRGS
 from src.structures import HierarchyRoutine, Routines, Cluster
 import datetime
 from itertools import combinations
+from utils.dataloader import DataLoaderUser
 
 
 def setup() -> dict:
@@ -16,38 +17,6 @@ def setup() -> dict:
         config = yaml.load(file, Loader=yaml.FullLoader)
 
     return config
-
-
-def get_time_series(path_to_feat_extraction: str, room: str, select_month: Optional[str] = None) -> pd.Series:
-    """
-    Get the time series of the room
-
-    Parameters:
-        path_to_feat_extraction: `str` path to the feature extraction
-        room: `str` room to get the time series
-        select_month: `Optional[str]` month to select
-
-    Returns:
-        `pd.Series` time series of the room
-    """
-
-    feat_extraction = pd.read_csv(path_to_feat_extraction)
-    if "Quarter" not in feat_extraction.columns.tolist():
-        feat_extraction["Date"] = pd.to_datetime(feat_extraction[["Year", "Month", "Day", "Hour"]])
-
-    else:
-        feat_extraction["Date"] = pd.to_datetime(feat_extraction[["Year", "Month", "Day", "Hour"]])
-        for row in range(feat_extraction.shape[0]):
-            feat_extraction.loc[row, "Date"] = feat_extraction.loc[row, "Date"] + pd.Timedelta(
-                minutes=feat_extraction.loc[row, "Quarter"] * 15)
-
-    feat_extraction.set_index("Date", inplace=True)
-    if select_month is not None:
-        feat_extraction = feat_extraction[feat_extraction["Month"] == int(select_month)]
-
-    room_time_series = feat_extraction[f"N_{room}"]
-
-    return room_time_series
 
 
 def filter_dates(dates: list[datetime.date], weekday: str, interval: tuple[int, int]) -> list[datetime.date]:
@@ -61,8 +30,8 @@ def filter_dates(dates: list[datetime.date], weekday: str, interval: tuple[int, 
 
     Returns:
         `list[datetime.date]` list of dates that are in the weekday and interval specified
-
     """
+
     start, end = interval
 
     return [date for date in dates if
@@ -115,6 +84,16 @@ def get_relative_frequency(*,
 
 
 def get_params(room: str) -> dict:
+    """
+    Get the parameters of the room or other location
+
+    Parameters:
+        room: `str` room name
+
+    Returns:
+        `dict` parameters of the room
+    """
+
     return config["params"]["Room"] if room == "Room" else config["params"]["other"]
 
 
@@ -128,6 +107,7 @@ def convert_from_minutes_to_hour(minutes: int) -> str:
     Returns:
         `str` hour in format HH:MM
     """
+
     hour = minutes // 60
     minutes = minutes % 60
 
@@ -196,6 +176,7 @@ def union_n_columns(df: pd.DataFrame) -> pd.Series:
 
     return df.apply(lambda x: inclusion_exclusion(x), axis=1)
 
+
 def fusion_all_clusters(routine: Routines) -> Cluster:
     fusioned_cluster = routine[0]
     for id_cluster in range(1, len(routine)):
@@ -203,7 +184,8 @@ def fusion_all_clusters(routine: Routines) -> Cluster:
 
     return fusioned_cluster
 
-def hierarchy_summarization(hierarchy_routine: HierarchyRoutine, key: int, user: str, location: str) -> pd.DataFrame:
+
+def hierarchy_summarization(*, hierarchy_routine: HierarchyRoutine, key: int, user: str, location: str) -> pd.DataFrame:
     """
     Get the summary of the hierarchy routine for a specific key
     applying the union of the probabilities for each cluster of
@@ -224,8 +206,7 @@ def hierarchy_summarization(hierarchy_routine: HierarchyRoutine, key: int, user:
     if len(routine_m) <= 10:
         result = summarize_cluster(user, location, routine_m[0])
         for id_cluster, cluster in enumerate(routine_m):
-            relative_table_per_cluster[f"{id_cluster + 1}"] = summarize_cluster(user, location, cluster)[
-                "RelativeFrequency"]
+            relative_table_per_cluster[f"{id_cluster + 1}"] = summarize_cluster(user, location, cluster)["RelativeFrequency"]
 
         relative_table = pd.DataFrame(relative_table_per_cluster)
         joined_columns = union_n_columns(relative_table)
@@ -243,16 +224,14 @@ if __name__ == "__main__":
     config = setup()
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-    # user_info = {}
     for dificulty in config["dificulties"]:
         user_groundtruth = pd.DataFrame(columns=["User", "Location", "Weekday", "Start", "End", "RelativeFrequency"])
-        # for user in config["users"]:
-        for user in ["9FE9", "402E", "682A", "52EA"]:
+        for user in config["users"]:
+            data_loader = DataLoaderUser(data_dir=config["data_dir"], user=user, dificulty=dificulty)
             for location in tqdm(config["rooms"]):
-                path_to_feat_extraction = f"data/{user}/{dificulty}/out_feat_extraction_quarters.csv"
                 params_drgs = get_params(location)
+                time_series = data_loader.load_time_series(room=location)
 
-                time_series = get_time_series(path_to_feat_extraction, location, select_month="3")
                 if np.sum(time_series) == 0:
                     continue
 
@@ -263,25 +242,7 @@ if __name__ == "__main__":
                 if hierarchy_routine.is_empty():
                     continue
 
-                relative_frequency = hierarchy_summarization(hierarchy_routine, 3, user, location)
+                relative_frequency = hierarchy_summarization(hierarchy_routine=hierarchy_routine, key=3, user=user, location=location)
                 user_groundtruth = pd.concat([user_groundtruth, relative_frequency])
 
         user_groundtruth.to_csv(f"results/{dificulty}_frequency_table.csv", index=False)
-
-    # config = setup()
-    # weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    #
-    # ROOM = "Terrace"
-    # DIFICULTY = "hard"
-    # path_to_feat_extraction = f"data/9FE9/{DIFICULTY}/out_feat_extraction_quarters.csv"
-    # params_drgs = get_params(config, ROOM)
-    #
-    # time_series = get_time_series(path_to_feat_extraction, ROOM, select_month="3")
-    # drgs = DRGS(**params_drgs)
-    # drgs.fit(time_series)
-    # hierarchy_routine = drgs.get_results()
-    #
-    # for key in hierarchy_routine.keys:
-    #     print(f"Hierarchy: {key}")
-    #     hierarchies = hierarchy_summarization(hierarchy_routine, key, "9FE9", ROOM)
-    #     print(hierarchies)

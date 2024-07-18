@@ -1,561 +1,127 @@
 User,Location,Weekday,Start,End,RelativeFrequency
-9FE9,TV Room,Monday,10:15,11:29,0.0
-9FE9,TV Room,Monday,11:30,13:00,0.0
-9FE9,TV Room,Monday,13:30,14:59,1.0
-9FE9,TV Room,Monday,15:00,16:15,0.9766
-9FE9,TV Room,Monday,16:45,17:59,0.0
-9FE9,TV Room,Monday,18:00,19:15,0.0
-9FE9,TV Room,Tuesday,10:15,11:29,0.0
-9FE9,TV Room,Tuesday,11:30,13:00,0.0
-9FE9,TV Room,Tuesday,13:30,14:59,0.0
-9FE9,TV Room,Tuesday,15:00,16:15,0.0
-9FE9,TV Room,Tuesday,16:45,17:59,0.0
-9FE9,TV Room,Tuesday,18:00,19:15,0.0
-9FE9,TV Room,Wednesday,10:15,11:29,0.0
-9FE9,TV Room,Wednesday,11:30,13:00,0.0
-9FE9,TV Room,Wednesday,13:30,14:59,1.0
-9FE9,TV Room,Wednesday,15:00,16:15,0.938
-9FE9,TV Room,Wednesday,16:45,17:59,0.0
-9FE9,TV Room,Wednesday,18:00,19:15,0.0
-9FE9,TV Room,Thursday,10:15,11:29,0.0
-9FE9,TV Room,Thursday,11:30,13:00,0.0
-9FE9,TV Room,Thursday,13:30,14:59,1.0
-9FE9,TV Room,Thursday,15:00,16:15,0.9488
-9FE9,TV Room,Thursday,16:45,17:59,0.0
-9FE9,TV Room,Thursday,18:00,19:15,0.0
-9FE9,TV Room,Friday,10:15,11:29,0.0
-9FE9,TV Room,Friday,11:30,13:00,0.0
-9FE9,TV Room,Friday,13:30,14:59,1.0
-9FE9,TV Room,Friday,15:00,16:15,0.9732
-9FE9,TV Room,Friday,16:45,17:59,0.0
-9FE9,TV Room,Friday,18:00,19:15,0.0
-9FE9,TV Room,Saturday,10:15,11:29,0.0
-9FE9,TV Room,Saturday,11:30,13:00,0.0
-9FE9,TV Room,Saturday,13:30,14:59,0.9282
-9FE9,TV Room,Saturday,15:00,16:15,0.0
-9FE9,TV Room,Saturday,16:45,17:59,0.0
-9FE9,TV Room,Saturday,18:00,19:15,0.0
-9FE9,TV Room,Sunday,10:15,11:29,0.0
-9FE9,TV Room,Sunday,11:30,13:00,0.0
-9FE9,TV Room,Sunday,13:30,14:59,0.9688
-9FE9,TV Room,Sunday,15:00,16:15,0.0
-9FE9,TV Room,Sunday,16:45,17:59,0.0
-9FE9,TV Room,Sunday,18:00,19:15,0.0
-9FE9,Therapy Room,Monday,10:15,11:29,1.0
-9FE9,Therapy Room,Monday,11:30,13:00,0.9544
-9FE9,Therapy Room,Monday,13:30,14:59,0.0
-9FE9,Therapy Room,Monday,15:00,16:15,0.0
-9FE9,Therapy Room,Monday,16:45,17:59,0.9241
-9FE9,Therapy Room,Monday,18:00,19:15,0.0
-9FE9,Therapy Room,Tuesday,10:15,11:29,1.0
-9FE9,Therapy Room,Tuesday,11:30,13:00,0.9479
-9FE9,Therapy Room,Tuesday,13:30,14:59,0.9453
-9FE9,Therapy Room,Tuesday,15:00,16:15,0.0
-9FE9,Therapy Room,Tuesday,16:45,17:59,1.0
-9FE9,Therapy Room,Tuesday,18:00,19:15,1.0
-9FE9,Therapy Room,Wednesday,10:15,11:29,1.0
-9FE9,Therapy Room,Wednesday,11:30,13:00,0.928
-9FE9,Therapy Room,Wednesday,13:30,14:59,0.0
-9FE9,Therapy Room,Wednesday,15:00,16:15,0.0
-9FE9,Therapy Room,Wednesday,16:45,17:59,0.8638
-9FE9,Therapy Room,Wednesday,18:00,19:15,0.0
-9FE9,Therapy Room,Thursday,10:15,11:29,0.9187
-9FE9,Therapy Room,Thursday,11:30,13:00,0.0
-9FE9,Therapy Room,Thursday,13:30,14:59,0.0
-9FE9,Therapy Room,Thursday,15:00,16:15,0.0
-9FE9,Therapy Room,Thursday,16:45,17:59,1.0
-9FE9,Therapy Room,Thursday,18:00,19:15,1.0
-9FE9,Therapy Room,Friday,10:15,11:29,0.9284
-9FE9,Therapy Room,Friday,11:30,13:00,0.0
-9FE9,Therapy Room,Friday,13:30,14:59,0.0
-9FE9,Therapy Room,Friday,15:00,16:15,0.0
-9FE9,Therapy Room,Friday,16:45,17:59,1.0
-9FE9,Therapy Room,Friday,18:00,19:15,1.0
-9FE9,Therapy Room,Saturday,10:15,11:29,0.9182
-9FE9,Therapy Room,Saturday,11:30,13:00,0.0
-9FE9,Therapy Room,Saturday,13:30,14:59,0.0
-9FE9,Therapy Room,Saturday,15:00,16:15,0.0
-9FE9,Therapy Room,Saturday,16:45,17:59,0.9156
-9FE9,Therapy Room,Saturday,18:00,19:15,0.0
-9FE9,Therapy Room,Sunday,10:15,11:29,0.9452
-9FE9,Therapy Room,Sunday,11:30,13:00,0.0
-9FE9,Therapy Room,Sunday,13:30,14:59,0.0
-9FE9,Therapy Room,Sunday,15:00,16:15,0.0
-9FE9,Therapy Room,Sunday,16:45,17:59,0.881
-9FE9,Therapy Room,Sunday,18:00,19:15,0.0
-9FE9,Terrace,Monday,10:15,11:29,0.0
-9FE9,Terrace,Monday,11:30,13:00,0.0
-9FE9,Terrace,Monday,13:30,14:59,0.0
-9FE9,Terrace,Monday,15:00,16:15,0.0
-9FE9,Terrace,Monday,16:45,17:59,0.0
-9FE9,Terrace,Monday,18:00,19:15,0.0
-9FE9,Terrace,Tuesday,10:15,11:29,0.0
-9FE9,Terrace,Tuesday,11:30,13:00,0.0
-9FE9,Terrace,Tuesday,13:30,14:59,0.0
-9FE9,Terrace,Tuesday,15:00,16:15,0.0
-9FE9,Terrace,Tuesday,16:45,17:59,0.0
-9FE9,Terrace,Tuesday,18:00,19:15,0.0
-9FE9,Terrace,Wednesday,10:15,11:29,0.0
-9FE9,Terrace,Wednesday,11:30,13:00,0.0
-9FE9,Terrace,Wednesday,13:30,14:59,0.0
-9FE9,Terrace,Wednesday,15:00,16:15,0.0
-9FE9,Terrace,Wednesday,16:45,17:59,0.0
-9FE9,Terrace,Wednesday,18:00,19:15,0.0
-9FE9,Terrace,Thursday,10:15,11:29,0.2256
-9FE9,Terrace,Thursday,11:30,13:00,0.9028
-9FE9,Terrace,Thursday,13:30,14:59,0.0
-9FE9,Terrace,Thursday,15:00,16:15,0.0
-9FE9,Terrace,Thursday,16:45,17:59,0.0
-9FE9,Terrace,Thursday,18:00,19:15,0.0
-9FE9,Terrace,Friday,10:15,11:29,0.24
-9FE9,Terrace,Friday,11:30,13:00,0.976
-9FE9,Terrace,Friday,13:30,14:59,0.0
-9FE9,Terrace,Friday,15:00,16:15,0.0
-9FE9,Terrace,Friday,16:45,17:59,0.0
-9FE9,Terrace,Friday,18:00,19:15,0.0
-9FE9,Terrace,Saturday,10:15,11:29,0.405
-9FE9,Terrace,Saturday,11:30,13:00,0.9362
-9FE9,Terrace,Saturday,13:30,14:59,0.0
-9FE9,Terrace,Saturday,15:00,16:15,0.0
-9FE9,Terrace,Saturday,16:45,17:59,0.0
-9FE9,Terrace,Saturday,18:00,19:15,0.0
-9FE9,Terrace,Sunday,10:15,11:29,0.0
-9FE9,Terrace,Sunday,11:30,13:00,0.9063
-9FE9,Terrace,Sunday,13:30,14:59,0.0
-9FE9,Terrace,Sunday,15:00,16:15,0.0
-9FE9,Terrace,Sunday,16:45,17:59,0.0
-9FE9,Terrace,Sunday,18:00,19:15,0.0
-9FE9,Room,Monday,10:15,11:29,0.0
-9FE9,Room,Monday,11:30,13:00,0.0
-9FE9,Room,Monday,13:30,14:59,0.0
-9FE9,Room,Monday,15:00,16:15,0.0
-9FE9,Room,Monday,16:45,17:59,0.15
-9FE9,Room,Monday,18:00,19:15,0.95
-9FE9,Room,Tuesday,10:15,11:29,0.0
-9FE9,Room,Tuesday,11:30,13:00,0.0
-9FE9,Room,Tuesday,13:30,14:59,0.0
-9FE9,Room,Tuesday,15:00,16:15,0.9
-9FE9,Room,Tuesday,16:45,17:59,0.0
-9FE9,Room,Tuesday,18:00,19:15,0.0
-9FE9,Room,Wednesday,10:15,11:29,0.0
-9FE9,Room,Wednesday,11:30,13:00,0.0
-9FE9,Room,Wednesday,13:30,14:59,0.0
-9FE9,Room,Wednesday,15:00,16:15,0.0
-9FE9,Room,Wednesday,16:45,17:59,0.0
-9FE9,Room,Wednesday,18:00,19:15,0.96
-9FE9,Room,Thursday,10:15,11:29,0.0
-9FE9,Room,Thursday,11:30,13:00,0.0
-9FE9,Room,Thursday,13:30,14:59,0.0
-9FE9,Room,Thursday,15:00,16:15,0.0
-9FE9,Room,Thursday,16:45,17:59,0.0
-9FE9,Room,Thursday,18:00,19:15,0.0
-9FE9,Room,Friday,10:15,11:29,0.0
-9FE9,Room,Friday,11:30,13:00,0.0
-9FE9,Room,Friday,13:30,14:59,0.0
-9FE9,Room,Friday,15:00,16:15,0.0
-9FE9,Room,Friday,16:45,17:59,0.0
-9FE9,Room,Friday,18:00,19:15,0.0
-9FE9,Room,Saturday,10:15,11:29,0.0
-9FE9,Room,Saturday,11:30,13:00,0.0
-9FE9,Room,Saturday,13:30,14:59,0.0
-9FE9,Room,Saturday,15:00,16:15,0.95
-9FE9,Room,Saturday,16:45,17:59,0.0
-9FE9,Room,Saturday,18:00,19:15,0.95
-9FE9,Room,Sunday,10:15,11:29,0.0
-9FE9,Room,Sunday,11:30,13:00,0.0
-9FE9,Room,Sunday,13:30,14:59,0.0
-9FE9,Room,Sunday,15:00,16:15,0.95
-9FE9,Room,Sunday,16:45,17:59,0.15
-9FE9,Room,Sunday,18:00,19:15,0.95
-402E,TV Room,Monday,10:15,11:14,0.0
-402E,TV Room,Monday,11:15,12:45,0.0
-402E,TV Room,Monday,13:30,14:59,0.0
-402E,TV Room,Monday,15:00,16:14,0.0
-402E,TV Room,Monday,16:45,17:59,0.0
-402E,TV Room,Monday,18:00,19:15,0.0
-402E,TV Room,Tuesday,10:15,11:14,0.0
-402E,TV Room,Tuesday,11:15,12:45,0.0
-402E,TV Room,Tuesday,13:30,14:59,0.0
-402E,TV Room,Tuesday,15:00,16:14,0.0
-402E,TV Room,Tuesday,16:45,17:59,0.0
-402E,TV Room,Tuesday,18:00,19:15,0.0
-402E,TV Room,Wednesday,10:15,11:14,0.0
-402E,TV Room,Wednesday,11:15,12:45,0.0
-402E,TV Room,Wednesday,13:30,14:59,1.0
-402E,TV Room,Wednesday,15:00,16:14,0.9744
-402E,TV Room,Wednesday,16:45,17:59,0.0
-402E,TV Room,Wednesday,18:00,19:15,0.0
-402E,TV Room,Thursday,10:15,11:14,0.0
-402E,TV Room,Thursday,11:15,12:45,0.0
-402E,TV Room,Thursday,13:30,14:59,0.0
-402E,TV Room,Thursday,15:00,16:14,0.0
-402E,TV Room,Thursday,16:45,17:59,0.0
-402E,TV Room,Thursday,18:00,19:15,0.0
-402E,TV Room,Friday,10:15,11:14,0.0
-402E,TV Room,Friday,11:15,12:45,0.0
-402E,TV Room,Friday,13:30,14:59,1.0
-402E,TV Room,Friday,15:00,16:14,0.9488
-402E,TV Room,Friday,16:45,17:59,0.0
-402E,TV Room,Friday,18:00,19:15,0.0
-402E,TV Room,Saturday,10:15,11:14,0.0
-402E,TV Room,Saturday,11:15,12:45,0.0
-402E,TV Room,Saturday,13:30,14:59,0.0
-402E,TV Room,Saturday,15:00,16:14,0.0
-402E,TV Room,Saturday,16:45,17:59,0.0
-402E,TV Room,Saturday,18:00,19:15,0.0
-402E,TV Room,Sunday,10:15,11:14,0.0
-402E,TV Room,Sunday,11:15,12:45,0.0
-402E,TV Room,Sunday,13:30,14:59,0.0
-402E,TV Room,Sunday,15:00,16:14,0.0
-402E,TV Room,Sunday,16:45,17:59,0.0
-402E,TV Room,Sunday,18:00,19:15,0.0
-402E,Therapy Room,Monday,10:15,11:14,1.0
-402E,Therapy Room,Monday,11:15,12:45,1.0
-402E,Therapy Room,Monday,13:30,14:59,1.0
-402E,Therapy Room,Monday,15:00,16:14,1.0
-402E,Therapy Room,Monday,16:45,17:59,1.0
-402E,Therapy Room,Monday,18:00,19:15,1.0
-402E,Therapy Room,Tuesday,10:15,11:14,1.0
-402E,Therapy Room,Tuesday,11:15,12:45,1.0
-402E,Therapy Room,Tuesday,13:30,14:59,1.0
-402E,Therapy Room,Tuesday,15:00,16:14,0.9747
-402E,Therapy Room,Tuesday,16:45,17:59,1.0
-402E,Therapy Room,Tuesday,18:00,19:15,1.0
-402E,Therapy Room,Wednesday,10:15,11:14,1.0
-402E,Therapy Room,Wednesday,11:15,12:45,1.0
-402E,Therapy Room,Wednesday,13:30,14:59,0.0
-402E,Therapy Room,Wednesday,15:00,16:14,0.0
-402E,Therapy Room,Wednesday,16:45,17:59,1.0
-402E,Therapy Room,Wednesday,18:00,19:15,1.0
-402E,Therapy Room,Thursday,10:15,11:14,1.0
-402E,Therapy Room,Thursday,11:15,12:45,1.0
-402E,Therapy Room,Thursday,13:30,14:59,0.9616
-402E,Therapy Room,Thursday,15:00,16:14,0.0
-402E,Therapy Room,Thursday,16:45,17:59,1.0
-402E,Therapy Room,Thursday,18:00,19:15,1.0
-402E,Therapy Room,Friday,10:15,11:14,0.0
-402E,Therapy Room,Friday,11:15,12:45,0.9462
-402E,Therapy Room,Friday,13:30,14:59,0.0
-402E,Therapy Room,Friday,15:00,16:14,0.0
-402E,Therapy Room,Friday,16:45,17:59,0.9058
-402E,Therapy Room,Friday,18:00,19:15,0.0
-402E,Therapy Room,Saturday,10:15,11:14,1.0
-402E,Therapy Room,Saturday,11:15,12:45,1.0
-402E,Therapy Room,Saturday,13:30,14:59,1.0
-402E,Therapy Room,Saturday,15:00,16:14,1.0
-402E,Therapy Room,Saturday,16:45,17:59,1.0
-402E,Therapy Room,Saturday,18:00,19:15,1.0
-402E,Therapy Room,Sunday,10:15,11:14,0.0
-402E,Therapy Room,Sunday,11:15,12:45,0.943
-402E,Therapy Room,Sunday,13:30,14:59,1.0
-402E,Therapy Room,Sunday,15:00,16:14,0.9702
-402E,Therapy Room,Sunday,16:45,17:59,0.923
-402E,Therapy Room,Sunday,18:00,19:15,0.0
-402E,Gym,Monday,10:15,11:14,0.0
-402E,Gym,Monday,11:15,12:45,0.0
-402E,Gym,Monday,13:30,14:59,0.0
-402E,Gym,Monday,15:00,16:14,0.0
-402E,Gym,Monday,16:45,17:59,0.0
-402E,Gym,Monday,18:00,19:15,0.0
-402E,Gym,Tuesday,10:15,11:14,0.0
-402E,Gym,Tuesday,11:15,12:45,0.0
-402E,Gym,Tuesday,13:30,14:59,0.0
-402E,Gym,Tuesday,15:00,16:14,0.0
-402E,Gym,Tuesday,16:45,17:59,0.0
-402E,Gym,Tuesday,18:00,19:15,0.0
-402E,Gym,Wednesday,10:15,11:14,0.0
-402E,Gym,Wednesday,11:15,12:45,0.0
-402E,Gym,Wednesday,13:30,14:59,0.0
-402E,Gym,Wednesday,15:00,16:14,0.0
-402E,Gym,Wednesday,16:45,17:59,0.0
-402E,Gym,Wednesday,18:00,19:15,0.0
-402E,Gym,Thursday,10:15,11:14,0.0
-402E,Gym,Thursday,11:15,12:45,0.0
-402E,Gym,Thursday,13:30,14:59,0.0
-402E,Gym,Thursday,15:00,16:14,0.88
-402E,Gym,Thursday,16:45,17:59,0.0
-402E,Gym,Thursday,18:00,19:15,0.0
-402E,Gym,Friday,10:15,11:14,1.0
-402E,Gym,Friday,11:15,12:45,0.0
-402E,Gym,Friday,13:30,14:59,0.0
-402E,Gym,Friday,15:00,16:14,0.0
-402E,Gym,Friday,16:45,17:59,0.0
-402E,Gym,Friday,18:00,19:15,0.0
-402E,Gym,Saturday,10:15,11:14,0.0
-402E,Gym,Saturday,11:15,12:45,0.0
-402E,Gym,Saturday,13:30,14:59,0.0
-402E,Gym,Saturday,15:00,16:14,0.0
-402E,Gym,Saturday,16:45,17:59,0.0
-402E,Gym,Saturday,18:00,19:15,0.0
-402E,Gym,Sunday,10:15,11:14,0.9375
-402E,Gym,Sunday,11:15,12:45,0.0
-402E,Gym,Sunday,13:30,14:59,0.0
-402E,Gym,Sunday,15:00,16:14,0.0
-402E,Gym,Sunday,16:45,17:59,0.0
-402E,Gym,Sunday,18:00,19:15,0.0
-402E,Room,Monday,10:15,11:14,0.0
-402E,Room,Monday,11:15,12:45,0.0
-402E,Room,Monday,13:30,14:59,0.0
-402E,Room,Monday,15:00,16:14,0.0
-402E,Room,Monday,16:45,17:59,0.0
-402E,Room,Monday,18:00,19:15,0.0
-402E,Room,Tuesday,10:15,11:14,0.0
-402E,Room,Tuesday,11:15,12:45,0.0
-402E,Room,Tuesday,13:30,14:59,0.0
-402E,Room,Tuesday,15:00,16:14,0.0
-402E,Room,Tuesday,16:45,17:59,0.0
-402E,Room,Tuesday,18:00,19:15,0.0
-402E,Room,Wednesday,10:15,11:14,0.0
-402E,Room,Wednesday,11:15,12:45,0.0
-402E,Room,Wednesday,13:30,14:59,0.0
-402E,Room,Wednesday,15:00,16:14,0.0
-402E,Room,Wednesday,16:45,17:59,0.0
-402E,Room,Wednesday,18:00,19:15,0.0
-402E,Room,Thursday,10:15,11:14,0.0
-402E,Room,Thursday,11:15,12:45,0.0
-402E,Room,Thursday,13:30,14:59,0.0
-402E,Room,Thursday,15:00,16:14,0.0
-402E,Room,Thursday,16:45,17:59,0.0
-402E,Room,Thursday,18:00,19:15,0.0
-402E,Room,Friday,10:15,11:14,0.0
-402E,Room,Friday,11:15,12:45,0.0
-402E,Room,Friday,13:30,14:59,0.0
-402E,Room,Friday,15:00,16:14,0.0
-402E,Room,Friday,16:45,17:59,0.12
-402E,Room,Friday,18:00,19:15,0.96
-402E,Room,Saturday,10:15,11:14,0.0
-402E,Room,Saturday,11:15,12:45,0.0
-402E,Room,Saturday,13:30,14:59,0.0
-402E,Room,Saturday,15:00,16:14,0.0
-402E,Room,Saturday,16:45,17:59,0.0
-402E,Room,Saturday,18:00,19:15,0.0
-402E,Room,Sunday,10:15,11:14,0.0
-402E,Room,Sunday,11:15,12:45,0.0
-402E,Room,Sunday,13:30,14:59,0.0
-402E,Room,Sunday,15:00,16:14,0.0
-402E,Room,Sunday,16:45,17:59,0.0
-402E,Room,Sunday,18:00,19:15,1.0
-682A,Therapy Room,Monday,10:15,10:59,0.8594
-682A,Therapy Room,Monday,11:00,11:29,0.0
-682A,Therapy Room,Monday,11:30,12:14,0.0
-682A,Therapy Room,Monday,12:15,12:45,0.0
-682A,Therapy Room,Monday,13:30,16:15,0.0
-682A,Therapy Room,Monday,17:00,17:29,0.0
-682A,Therapy Room,Monday,17:30,18:29,0.0
-682A,Therapy Room,Monday,18:30,19:45,0.0
-682A,Therapy Room,Tuesday,10:15,10:59,0.7188
-682A,Therapy Room,Tuesday,11:00,11:29,0.0
-682A,Therapy Room,Tuesday,11:30,12:14,0.0
-682A,Therapy Room,Tuesday,12:15,12:45,0.0
-682A,Therapy Room,Tuesday,13:30,16:15,0.0
-682A,Therapy Room,Tuesday,17:00,17:29,0.0
-682A,Therapy Room,Tuesday,17:30,18:29,0.0
-682A,Therapy Room,Tuesday,18:30,19:45,0.0
-682A,Therapy Room,Wednesday,10:15,10:59,0.0
-682A,Therapy Room,Wednesday,11:00,11:29,0.0
-682A,Therapy Room,Wednesday,11:30,12:14,0.0
-682A,Therapy Room,Wednesday,12:15,12:45,0.0
-682A,Therapy Room,Wednesday,13:30,16:15,0.0
-682A,Therapy Room,Wednesday,17:00,17:29,0.4
-682A,Therapy Room,Wednesday,17:30,18:29,0.762
-682A,Therapy Room,Wednesday,18:30,19:45,0.0
-682A,Therapy Room,Thursday,10:15,10:59,0.0
-682A,Therapy Room,Thursday,11:00,11:29,0.0
-682A,Therapy Room,Thursday,11:30,12:14,0.0
-682A,Therapy Room,Thursday,12:15,12:45,0.0
-682A,Therapy Room,Thursday,13:30,16:15,0.0
-682A,Therapy Room,Thursday,17:00,17:29,0.0
-682A,Therapy Room,Thursday,17:30,18:29,0.0
-682A,Therapy Room,Thursday,18:30,19:45,0.0
-682A,Therapy Room,Friday,10:15,10:59,0.0
-682A,Therapy Room,Friday,11:00,11:29,0.0
-682A,Therapy Room,Friday,11:30,12:14,0.0
-682A,Therapy Room,Friday,12:15,12:45,0.0
-682A,Therapy Room,Friday,13:30,16:15,0.0
-682A,Therapy Room,Friday,17:00,17:29,0.0
-682A,Therapy Room,Friday,17:30,18:29,0.0
-682A,Therapy Room,Friday,18:30,19:45,0.0
-682A,Therapy Room,Saturday,10:15,10:59,0.625
-682A,Therapy Room,Saturday,11:00,11:29,0.0
-682A,Therapy Room,Saturday,11:30,12:14,0.0
-682A,Therapy Room,Saturday,12:15,12:45,0.0
-682A,Therapy Room,Saturday,13:30,16:15,0.0
-682A,Therapy Room,Saturday,17:00,17:29,0.0
-682A,Therapy Room,Saturday,17:30,18:29,0.0
-682A,Therapy Room,Saturday,18:30,19:45,0.0
-682A,Therapy Room,Sunday,10:15,10:59,0.0
-682A,Therapy Room,Sunday,11:00,11:29,0.0
-682A,Therapy Room,Sunday,11:30,12:14,0.0
-682A,Therapy Room,Sunday,12:15,12:45,0.0
-682A,Therapy Room,Sunday,13:30,16:15,0.0
-682A,Therapy Room,Sunday,17:00,17:29,0.0
-682A,Therapy Room,Sunday,17:30,18:29,0.0
-682A,Therapy Room,Sunday,18:30,19:45,0.0
-682A,Terrace,Monday,10:15,10:59,0.0
-682A,Terrace,Monday,11:00,11:29,0.0
-682A,Terrace,Monday,11:30,12:14,0.0
-682A,Terrace,Monday,12:15,12:45,0.0
-682A,Terrace,Monday,13:30,16:15,0.0
-682A,Terrace,Monday,17:00,17:29,1.0
-682A,Terrace,Monday,17:30,18:29,1.0
-682A,Terrace,Monday,18:30,19:45,1.0
-682A,Terrace,Tuesday,10:15,10:59,0.0
-682A,Terrace,Tuesday,11:00,11:29,0.0
-682A,Terrace,Tuesday,11:30,12:14,0.0
-682A,Terrace,Tuesday,12:15,12:45,0.0
-682A,Terrace,Tuesday,13:30,16:15,0.0
-682A,Terrace,Tuesday,17:00,17:29,1.0
-682A,Terrace,Tuesday,17:30,18:29,1.0
-682A,Terrace,Tuesday,18:30,19:45,0.9725
-682A,Terrace,Wednesday,10:15,10:59,0.0
-682A,Terrace,Wednesday,11:00,11:29,0.0
-682A,Terrace,Wednesday,11:30,12:14,0.0
-682A,Terrace,Wednesday,12:15,12:45,0.0
-682A,Terrace,Wednesday,13:30,16:15,0.0
-682A,Terrace,Wednesday,17:00,17:29,0.0
-682A,Terrace,Wednesday,17:30,18:29,0.0
-682A,Terrace,Wednesday,18:30,19:45,0.0
-682A,Terrace,Thursday,10:15,10:59,0.0
-682A,Terrace,Thursday,11:00,11:29,0.0
-682A,Terrace,Thursday,11:30,12:14,0.0
-682A,Terrace,Thursday,12:15,12:45,0.0
-682A,Terrace,Thursday,13:30,16:15,0.0
-682A,Terrace,Thursday,17:00,17:29,0.0
-682A,Terrace,Thursday,17:30,18:29,0.0
-682A,Terrace,Thursday,18:30,19:45,0.0
-682A,Terrace,Friday,10:15,10:59,0.0
-682A,Terrace,Friday,11:00,11:29,0.0
-682A,Terrace,Friday,11:30,12:14,0.0
-682A,Terrace,Friday,12:15,12:45,0.0
-682A,Terrace,Friday,13:30,16:15,0.0
-682A,Terrace,Friday,17:00,17:29,1.0
-682A,Terrace,Friday,17:30,18:29,1.0
-682A,Terrace,Friday,18:30,19:45,0.9696
-682A,Terrace,Saturday,10:15,10:59,0.0
-682A,Terrace,Saturday,11:00,11:29,0.0
-682A,Terrace,Saturday,11:30,12:14,0.0
-682A,Terrace,Saturday,12:15,12:45,0.0
-682A,Terrace,Saturday,13:30,16:15,0.0
-682A,Terrace,Saturday,17:00,17:29,0.0
-682A,Terrace,Saturday,17:30,18:29,0.0
-682A,Terrace,Saturday,18:30,19:45,0.0
-682A,Terrace,Sunday,10:15,10:59,0.0
-682A,Terrace,Sunday,11:00,11:29,0.0
-682A,Terrace,Sunday,11:30,12:14,0.0
-682A,Terrace,Sunday,12:15,12:45,0.0
-682A,Terrace,Sunday,13:30,16:15,0.0
-682A,Terrace,Sunday,17:00,17:29,1.0
-682A,Terrace,Sunday,17:30,18:29,1.0
-682A,Terrace,Sunday,18:30,19:45,1.0
-682A,Room,Monday,10:15,10:59,0.0
-682A,Room,Monday,11:00,11:29,1.0
-682A,Room,Monday,11:30,12:14,1.0
-682A,Room,Monday,12:15,12:45,0.25
-682A,Room,Monday,13:30,16:15,0.9318
-682A,Room,Monday,17:00,17:29,0.0
-682A,Room,Monday,17:30,18:29,0.0
-682A,Room,Monday,18:30,19:45,0.0
-682A,Room,Tuesday,10:15,10:59,0.25
-682A,Room,Tuesday,11:00,11:29,1.0
-682A,Room,Tuesday,11:30,12:14,1.0
-682A,Room,Tuesday,12:15,12:45,0.25
-682A,Room,Tuesday,13:30,16:15,0.9773
-682A,Room,Tuesday,17:00,17:29,0.0
-682A,Room,Tuesday,17:30,18:29,0.0
-682A,Room,Tuesday,18:30,19:45,0.0
-682A,Room,Wednesday,10:15,10:59,1.0
-682A,Room,Wednesday,11:00,11:29,1.0
-682A,Room,Wednesday,11:30,12:14,1.0
-682A,Room,Wednesday,12:15,12:45,0.0
-682A,Room,Wednesday,13:30,16:15,0.9455
-682A,Room,Wednesday,17:00,17:29,0.0
-682A,Room,Wednesday,17:30,18:29,0.15
-682A,Room,Wednesday,18:30,19:45,0.92
-682A,Room,Thursday,10:15,10:59,1.0
-682A,Room,Thursday,11:00,11:29,0.0
-682A,Room,Thursday,11:30,12:14,0.0
-682A,Room,Thursday,12:15,12:45,0.0
-682A,Room,Thursday,13:30,16:15,0.9273
-682A,Room,Thursday,17:00,17:29,1.0
-682A,Room,Thursday,17:30,18:29,1.0
-682A,Room,Thursday,18:30,19:45,0.92
-682A,Room,Friday,10:15,10:59,1.0
-682A,Room,Friday,11:00,11:29,1.0
-682A,Room,Friday,11:30,12:14,1.0
-682A,Room,Friday,12:15,12:45,0.0
-682A,Room,Friday,13:30,16:15,0.9091
-682A,Room,Friday,17:00,17:29,0.0
-682A,Room,Friday,17:30,18:29,0.0
-682A,Room,Friday,18:30,19:45,0.0
-682A,Room,Saturday,10:15,10:59,0.0
-682A,Room,Saturday,11:00,11:29,1.0
-682A,Room,Saturday,11:30,12:14,1.0
-682A,Room,Saturday,12:15,12:45,0.0
-682A,Room,Saturday,13:30,16:15,0.9318
-682A,Room,Saturday,17:00,17:29,1.0
-682A,Room,Saturday,17:30,18:29,1.0
-682A,Room,Saturday,18:30,19:45,0.85
-682A,Room,Sunday,10:15,10:59,1.0
-682A,Room,Sunday,11:00,11:29,1.0
-682A,Room,Sunday,11:30,12:14,1.0
-682A,Room,Sunday,12:15,12:45,0.0
-682A,Room,Sunday,13:30,16:15,0.9091
-682A,Room,Sunday,17:00,17:29,0.0
-682A,Room,Sunday,17:30,18:29,0.0
-682A,Room,Sunday,18:30,19:45,0.0
-52EA,Gym,Monday,10:15,11:14,0.0
-52EA,Gym,Monday,11:15,12:45,0.0
-52EA,Gym,Monday,13:30,16:15,0.0
-52EA,Gym,Monday,16:45,19:45,0.0
-52EA,Gym,Tuesday,10:15,11:14,0.0
-52EA,Gym,Tuesday,11:15,12:45,0.0
-52EA,Gym,Tuesday,13:30,16:15,0.0
-52EA,Gym,Tuesday,16:45,19:45,0.0
-52EA,Gym,Wednesday,10:15,11:14,0.9
-52EA,Gym,Wednesday,11:15,12:45,0.0
-52EA,Gym,Wednesday,13:30,16:15,0.0
-52EA,Gym,Wednesday,16:45,19:45,0.0
-52EA,Gym,Thursday,10:15,11:14,0.0
-52EA,Gym,Thursday,11:15,12:45,0.0
-52EA,Gym,Thursday,13:30,16:15,0.0
-52EA,Gym,Thursday,16:45,19:45,0.0
-52EA,Gym,Friday,10:15,11:14,0.0
-52EA,Gym,Friday,11:15,12:45,0.0
-52EA,Gym,Friday,13:30,16:15,0.0
-52EA,Gym,Friday,16:45,19:45,0.0
-52EA,Gym,Saturday,10:15,11:14,0.0
-52EA,Gym,Saturday,11:15,12:45,0.0
-52EA,Gym,Saturday,13:30,16:15,0.0
-52EA,Gym,Saturday,16:45,19:45,0.0
-52EA,Gym,Sunday,10:15,11:14,0.0
-52EA,Gym,Sunday,11:15,12:45,0.0
-52EA,Gym,Sunday,13:30,16:15,0.0
-52EA,Gym,Sunday,16:45,19:45,0.0
-52EA,Room,Monday,10:15,11:14,1.0
-52EA,Room,Monday,11:15,12:45,0.9167
-52EA,Room,Monday,13:30,16:15,0.9318
-52EA,Room,Monday,16:45,19:45,0.875
-52EA,Room,Tuesday,10:15,11:14,1.0
-52EA,Room,Tuesday,11:15,12:45,0.9167
-52EA,Room,Tuesday,13:30,16:15,0.9318
-52EA,Room,Tuesday,16:45,19:45,0.9583
-52EA,Room,Wednesday,10:15,11:14,0.0
-52EA,Room,Wednesday,11:15,12:45,0.9
-52EA,Room,Wednesday,13:30,16:15,0.9273
-52EA,Room,Wednesday,16:45,19:45,0.9167
-52EA,Room,Thursday,10:15,11:14,1.0
-52EA,Room,Thursday,11:15,12:45,0.9333
-52EA,Room,Thursday,13:30,16:15,0.8727
-52EA,Room,Thursday,16:45,19:45,0.8833
-52EA,Room,Friday,10:15,11:14,1.0
-52EA,Room,Friday,11:15,12:45,0.8667
-52EA,Room,Friday,13:30,16:15,0.9636
-52EA,Room,Friday,16:45,19:45,0.9167
-52EA,Room,Saturday,10:15,11:14,1.0
-52EA,Room,Saturday,11:15,12:45,0.9167
-52EA,Room,Saturday,13:30,16:15,0.9091
-52EA,Room,Saturday,16:45,19:45,0.875
-52EA,Room,Sunday,10:15,11:14,0.0
-52EA,Room,Sunday,11:15,12:45,0.8333
-52EA,Room,Sunday,13:30,16:15,0.9545
-52EA,Room,Sunday,16:45,19:45,0.9375
+F176,Therapy Room,Monday,10:15,11:29,0.3
+F176,Therapy Room,Monday,11:30,13:00,0.9601
+F176,Therapy Room,Monday,13:30,15:44,0.0
+F176,Therapy Room,Monday,15:45,16:15,0.0
+F176,Therapy Room,Monday,16:45,17:59,1.0
+F176,Therapy Room,Monday,18:00,19:30,0.9521
+F176,Therapy Room,Tuesday,10:15,11:29,0.15
+F176,Therapy Room,Tuesday,11:30,13:00,0.9453
+F176,Therapy Room,Tuesday,13:30,15:44,0.0
+F176,Therapy Room,Tuesday,15:45,16:15,0.0
+F176,Therapy Room,Tuesday,16:45,17:59,0.9858
+F176,Therapy Room,Tuesday,18:00,19:30,0.0
+F176,Therapy Room,Wednesday,10:15,11:29,0.24
+F176,Therapy Room,Wednesday,11:30,13:00,0.9352
+F176,Therapy Room,Wednesday,13:30,15:44,0.0
+F176,Therapy Room,Wednesday,15:45,16:15,0.0
+F176,Therapy Room,Wednesday,16:45,17:59,1.0
+F176,Therapy Room,Wednesday,18:00,19:30,0.952
+F176,Therapy Room,Thursday,10:15,11:29,0.2256
+F176,Therapy Room,Thursday,11:30,13:00,0.946
+F176,Therapy Room,Thursday,13:30,15:44,0.0
+F176,Therapy Room,Thursday,15:45,16:15,0.0
+F176,Therapy Room,Thursday,16:45,17:59,0.9834
+F176,Therapy Room,Thursday,18:00,19:30,0.0
+F176,Therapy Room,Friday,10:15,11:29,0.3312
+F176,Therapy Room,Friday,11:30,13:00,0.976
+F176,Therapy Room,Friday,13:30,15:44,0.0
+F176,Therapy Room,Friday,15:45,16:15,0.0
+F176,Therapy Room,Friday,16:45,17:59,0.9723
+F176,Therapy Room,Friday,18:00,19:30,0.0
+F176,Therapy Room,Saturday,10:15,11:29,0.2775
+F176,Therapy Room,Saturday,11:30,13:00,0.9462
+F176,Therapy Room,Saturday,13:30,15:44,0.0
+F176,Therapy Room,Saturday,15:45,16:15,0.0
+F176,Therapy Room,Saturday,16:45,17:59,0.9573
+F176,Therapy Room,Saturday,18:00,19:30,0.0
+F176,Therapy Room,Sunday,10:15,11:29,0.15
+F176,Therapy Room,Sunday,11:30,13:00,0.9282
+F176,Therapy Room,Sunday,13:30,15:44,0.0
+F176,Therapy Room,Sunday,15:45,16:15,0.0
+F176,Therapy Room,Sunday,16:45,17:59,0.91
+F176,Therapy Room,Sunday,18:00,19:30,0.0
+F176,Gym,Monday,10:15,11:29,0.9346
+F176,Gym,Monday,11:30,13:00,0.0
+F176,Gym,Monday,13:30,15:44,0.0
+F176,Gym,Monday,15:45,16:15,0.0
+F176,Gym,Monday,16:45,17:59,0.0
+F176,Gym,Monday,18:00,19:30,0.0
+F176,Gym,Tuesday,10:15,11:29,0.9639
+F176,Gym,Tuesday,11:30,13:00,0.0
+F176,Gym,Tuesday,13:30,15:44,0.0
+F176,Gym,Tuesday,15:45,16:15,0.0
+F176,Gym,Tuesday,16:45,17:59,0.0
+F176,Gym,Tuesday,18:00,19:30,0.0
+F176,Gym,Wednesday,10:15,11:29,0.9055
+F176,Gym,Wednesday,11:30,13:00,0.0
+F176,Gym,Wednesday,13:30,15:44,0.0
+F176,Gym,Wednesday,15:45,16:15,0.0
+F176,Gym,Wednesday,16:45,17:59,0.0
+F176,Gym,Wednesday,18:00,19:30,0.0
+F176,Gym,Thursday,10:15,11:29,0.9409
+F176,Gym,Thursday,11:30,13:00,0.0
+F176,Gym,Thursday,13:30,15:44,0.0
+F176,Gym,Thursday,15:45,16:15,0.0
+F176,Gym,Thursday,16:45,17:59,0.0
+F176,Gym,Thursday,18:00,19:30,0.0
+F176,Gym,Friday,10:15,11:29,0.9187
+F176,Gym,Friday,11:30,13:00,0.0
+F176,Gym,Friday,13:30,15:44,0.0
+F176,Gym,Friday,15:45,16:15,0.0
+F176,Gym,Friday,16:45,17:59,0.0
+F176,Gym,Friday,18:00,19:30,0.0
+F176,Gym,Saturday,10:15,11:29,0.9079
+F176,Gym,Saturday,11:30,13:00,0.0
+F176,Gym,Saturday,13:30,15:44,0.0
+F176,Gym,Saturday,15:45,16:15,0.0
+F176,Gym,Saturday,16:45,17:59,0.0
+F176,Gym,Saturday,18:00,19:30,0.0
+F176,Gym,Sunday,10:15,11:29,0.9461
+F176,Gym,Sunday,11:30,13:00,0.0
+F176,Gym,Sunday,13:30,15:44,0.0
+F176,Gym,Sunday,15:45,16:15,0.0
+F176,Gym,Sunday,16:45,17:59,0.0
+F176,Gym,Sunday,18:00,19:30,0.0
+F176,Room,Monday,10:15,11:29,0.0
+F176,Room,Monday,11:30,13:00,0.0
+F176,Room,Monday,13:30,15:44,1.0
+F176,Room,Monday,15:45,16:15,0.25
+F176,Room,Monday,16:45,17:59,0.0
+F176,Room,Monday,18:00,19:30,0.0
+F176,Room,Tuesday,10:15,11:29,0.0
+F176,Room,Tuesday,11:30,13:00,0.0
+F176,Room,Tuesday,13:30,15:44,1.0
+F176,Room,Tuesday,15:45,16:15,0.25
+F176,Room,Tuesday,16:45,17:59,0.0
+F176,Room,Tuesday,18:00,19:30,0.8333
+F176,Room,Wednesday,10:15,11:29,0.0
+F176,Room,Wednesday,11:30,13:00,0.0
+F176,Room,Wednesday,13:30,15:44,0.952
+F176,Room,Wednesday,15:45,16:15,0.0
+F176,Room,Wednesday,16:45,17:59,0.0
+F176,Room,Wednesday,18:00,19:30,0.0
+F176,Room,Thursday,10:15,11:29,0.0
+F176,Room,Thursday,11:30,13:00,0.0
+F176,Room,Thursday,13:30,15:44,1.0
+F176,Room,Thursday,15:45,16:15,0.4
+F176,Room,Thursday,16:45,17:59,0.0
+F176,Room,Thursday,18:00,19:30,0.8333
+F176,Room,Friday,10:15,11:29,0.0
+F176,Room,Friday,11:30,13:00,0.0
+F176,Room,Friday,13:30,15:44,1.0
+F176,Room,Friday,15:45,16:15,0.2
+F176,Room,Friday,16:45,17:59,0.0
+F176,Room,Friday,18:00,19:30,0.8667
+F176,Room,Saturday,10:15,11:29,0.0
+F176,Room,Saturday,11:30,13:00,0.0
+F176,Room,Saturday,13:30,15:44,1.0
+F176,Room,Saturday,15:45,16:15,0.5
+F176,Room,Saturday,16:45,17:59,0.0
+F176,Room,Saturday,18:00,19:30,0.7917
+F176,Room,Sunday,10:15,11:29,0.0
+F176,Room,Sunday,11:30,13:00,0.0
+F176,Room,Sunday,13:30,15:44,1.0
+F176,Room,Sunday,15:45,16:15,0.25
+F176,Room,Sunday,16:45,17:59,0.0
+F176,Room,Sunday,18:00,19:30,0.9167

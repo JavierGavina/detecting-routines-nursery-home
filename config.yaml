@@ -100,7 +100,7 @@ intervals_of_interest:
       start: 15:00
       end: 16:15
     -
-      duration_time: 75
+      duration_time: 70
       start: 16:45
       end: 17:59
     -
@@ -123,9 +123,9 @@ intervals_of_interest:
     -
       duration_time: 75
       start: 15:00
-      end: 16:14
+      end: 16:15
     -
-      duration_time: 75
+      duration_time: 70
       start: 16:45
       end: 17:59
     -
@@ -148,7 +148,7 @@ intervals_of_interest:
     -
       duration_time: 175
       start: 16:45
-      end: 19:45
+      end: 19:30
   682A:
     -
       duration_time: 45
@@ -182,6 +182,50 @@ intervals_of_interest:
       duration_time: 75
       start: 18:30
       end: 19:45
-
-
+  02A8:
+    -
+      duration_time: 150
+      start: 10:15
+      end: 12:45
+    -
+      duration_time: 60
+      start: 13:30
+      end: 14:29
+    -
+      duration_time: 60
+      start: 14:30
+      end: 15:29
+    -
+      duration_time: 45
+      start: 15:30
+      end: 16:15
+    -
+      duration_time: 165
+      start: 16:45
+      end: 19:30
+  F176:
+    -
+      duration_time: 75
+      start: 10:15
+      end: 11:29
+    -
+      duration_time: 90
+      start: 11:30
+      end: 13:00
+    -
+      duration_time: 125
+      start: 13:30
+      end: 15:44
+    -
+      duration_time: 35
+      start: 15:45
+      end: 16:15
+    -
+      duration_time: 65
+      start: 16:45
+      end: 17:59
+    -
+      duration_time: 90
+      start: 18:00
+      end: 19:30
 
