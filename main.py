@@ -13,22 +13,6 @@ import yaml
 from src.DRFL import DRGS
 
 
-# import argparse
-#
-# argparser = argparse.ArgumentParser()
-# argparser.add_argument("--data_dir", type=str, default="data/activities-simulation.csv", help="Path to the data file")
-# argparser.add_argument("--dictionary_dir", type=str, default="data/dictionary_rooms.json",
-#                        help="Path to the dictionary file")
-# argparser.add_argument("--param_m", type=int, default=4, help="length of the subsequences")
-# argparser.add_argument("--param_R", type=int, default=10, help="least maximum distance between subsequences")
-# argparser.add_argument("--param_C", type=int, default=4, help="minimum number of matches of a routine")
-# argparser.add_argument("--param_G", type=int, default=60, help="minimum magnitude of a subsequence")
-# argparser.add_argument("--epsilon", type=float, default=0.5, help="minimum overlap percentage")
-# argparser.add_argument("--L", type=int, default=0, help="minimum number of subsequences in a routine")
-# argparser.add_argument("--fusion_distance", type=float, default=0.001,
-#                        help="minimum distance between clusters centroids to be fused")
-
-
 class DataLoaderUser:
     def __init__(self, data_dir: str, user: str, dificulty: str):
         self.__check_params(data_dir, user, dificulty)
@@ -86,7 +70,6 @@ class DataLoaderUser:
 
 
 def plot_quarters_groundtruth(*, time_series: pd.Series,
-                              room: str,
                               top_days: int = 30,
                               figsize: tuple[int, int] = (30, 30),
                               title_size: int = 20,
@@ -98,6 +81,24 @@ def plot_quarters_groundtruth(*, time_series: pd.Series,
                               show_grid: bool = True,
                               xlim: Optional[tuple[str, str]] = None,
                               save_dir: Optional[str] = None):
+    """
+    Plot the time series of a room in quarters with the ground truth of the activities
+
+    Parameters:
+        time_series: ``pd.Series``: Time series of the room
+        top_days: ``int``: Number of days to plot
+        figsize: ``tuple[int, int]``: Size of the figure. Default (30, 30)
+        title_size: ``int``: Size of the title. Default 20
+        ticks_size: ``int``: Size of the ticks. Default 10
+        labels_size: ``int``: Size of the labels. Default 15
+        barcolors: ``Union[str, np.ndarray, list[int, int, int]]``: Color of the bars. Default "blue"
+        linewidth: ``Union[int, float]``: Width of the lines. Default 1.5
+        show_plot: ``bool``: Show the plot. Default True
+        show_grid: ``bool``: Show the grid. Default True
+        xlim: ``Optional[tuple[str, str]]``: Limit of the x axis. Default None
+        save_dir: ``Optional[str]``: Path to save the plot. Default None
+    """
+
     if isinstance(barcolors, list):
         barcolors = np.array(barcolors) / 255
 
@@ -132,7 +133,7 @@ def plot_quarters_groundtruth(*, time_series: pd.Series,
 
         ax.set_xticks(ticks=np.arange(0, 24 * 4, 2), labels=[x for idx, x in enumerate(x_hour_minutes) if idx % 2 == 0],
                       rotation=90, fontsize=ticks_size)
-        ax.set_yticks(ticks=np.arange(0, 19, 4), labels=np.arange(0, 19, 4),  fontsize=ticks_size)
+        ax.set_yticks(ticks=np.arange(0, 19, 4), labels=np.arange(0, 19, 4), fontsize=ticks_size)
 
         if show_grid:
             ax.grid(True)
@@ -145,11 +146,7 @@ def plot_quarters_groundtruth(*, time_series: pd.Series,
 
         # Annotate height of the bar
         for idx, value in enumerate(time_series[i * 24 * 4:(i + 1) * 24 * 4]):
-            if xlim:
-                if st_idx <= idx <= en_idx:
-                    ax.text(idx, value + 0.5, str(value), ha='center', va='bottom', fontsize=ticks_size)
-
-            else:
+            if (xlim and st_idx <= idx <= en_idx) or not xlim:
                 ax.text(idx, value + 0.5, str(value), ha='center', va='bottom', fontsize=ticks_size)
 
     plt.tight_layout()
@@ -187,9 +184,10 @@ def save_results_plot(*, drgs_fitted: DRGS, room_routines: str, user: str, dific
 
     path_out = f"{room_routines}/{room}"
     os.makedirs(path_out, exist_ok=True)
+    xlim = ("09:30", "20:00") if room != "Room" else None
     drgs.results_per_quarter_hour(top_days=7, figsize=(15, 23), save_dir=path_out,
                                   bars_linewidth=2, show_background_annotations=True,
-                                  show_plot=False, format="pdf", xlim=("09:30", "20:00"))
+                                  show_plot=False, format="pdf", xlim=xlim)
 
     tree = drgs.convert_to_cluster_tree()
     tree.plot_tree(title=f"Result Tree dificulty {dificulty}",
@@ -225,6 +223,7 @@ if __name__ == "__main__":
             os.makedirs(room_routines, exist_ok=True)
 
             data_loader = DataLoaderUser(data_dir=config["data_dir"], user=user, dificulty=dificulty)
+
             for room in config["rooms"]:
                 time_series = data_loader.load_time_series(room=room)
 
@@ -232,10 +231,12 @@ if __name__ == "__main__":
                     warnings.warn(f"Room {room} has no data for user {user} and dificulty {dificulty}")
                     continue
 
-                plot_quarters_groundtruth(time_series=time_series, room=room,
+                xlim = ("09:30", "20:00") if room != "Room" else None
+
+                plot_quarters_groundtruth(time_series=time_series,
                                           barcolors=config["colors"][room],
                                           top_days=7, figsize=(15, 23), linewidth=2,
-                                          xlim=("09:30", "20:00"), show_grid=False,
+                                          xlim=xlim, show_grid=False,
                                           save_dir=f"{room_visualization}/{room}.pdf", show_plot=False)
 
                 params = get_params(config=config, room=room)

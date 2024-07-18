@@ -71,6 +71,16 @@ params:
     L: 1
     epsilon: 0.5
     fusion_distance: 0.001
+
+N_weekdays_on_month:
+  Monday: 4
+  Tuesday: 4
+  Wednesday: 5
+  Thursday: 5
+  Friday: 5
+  Saturday: 4
+  Sunday: 4
+
 intervals_of_interest:
   9FE9:
     -
@@ -94,14 +104,84 @@ intervals_of_interest:
       start: 16:45
       end: 17:59
     -
-      duration_time: 90
+      duration_time: 75
       start: 18:00
-      end: 19:30
-N_weekdays_on_month:
-  Monday: 4
-  Tuesday: 4
-  Wednesday: 5
-  Thursday: 5
-  Friday: 5
-  Saturday: 4
-  Sunday: 4
+      end: 19:15
+  402E:
+    -
+      duration_time: 60
+      start: 10:15
+      end: 11:14
+    -
+      duration_time: 90
+      start: 11:15
+      end: 12:45
+    -
+      duration_time: 90
+      start: 13:30
+      end: 14:59
+    -
+      duration_time: 75
+      start: 15:00
+      end: 16:14
+    -
+      duration_time: 75
+      start: 16:45
+      end: 17:59
+    -
+      duration_time: 75
+      start: 18:00
+      end: 19:15
+  52EA:
+    -
+      duration_time: 60
+      start: 10:15
+      end: 11:14
+    -
+      duration_time: 90
+      start: 11:15
+      end: 12:45
+    -
+      duration_time: 165
+      start: 13:30
+      end: 16:15
+    -
+      duration_time: 175
+      start: 16:45
+      end: 19:45
+  682A:
+    -
+      duration_time: 45
+      start: 10:15
+      end: 10:59
+    -
+      duration_time: 30
+      start: 11:00
+      end: 11:29
+    -
+      duration_time: 45
+      start: 11:30
+      end: 12:14
+    -
+      duration_time: 30
+      start: 12:15
+      end: 12:45
+    -
+      duration_time: 165
+      start: 13:30
+      end: 16:15
+    -
+      duration_time: 30
+      start: 17:00
+      end: 17:29
+    -
+      duration_time: 60
+      start: 17:30
+      end: 18:29
+    -
+      duration_time: 75
+      start: 18:30
+      end: 19:45
+
+
+
