@@ -334,11 +334,11 @@ if __name__ == "__main__":
                 rooms_statistics.loc[len(rooms_statistics)] = [dificulty, user, c, f1_room, precision_room, recall_room,
                                                                auc_room]
 
-            f1_user = f1_score(y_true=labels_groundtruth, y_pred=user_labels, average="macro", zero_division=0)
-            f1_weighted = f1_score(y_true=labels_groundtruth, y_pred=user_labels, average="weighted", zero_division=0)
-            f1_micro = f1_score(y_true=labels_groundtruth, y_pred=user_labels, average="micro", zero_division=0)
-            macro_auc = roc_auc["macro"]
-            micro_auc = roc_auc["micro"]
+            f1_user = np.round(f1_score(y_true=labels_groundtruth, y_pred=user_labels, average="macro", zero_division=0), decimals=3)
+            f1_weighted = np.round(f1_score(y_true=labels_groundtruth, y_pred=user_labels, average="weighted", zero_division=0), decimals=3)
+            f1_micro = np.round(f1_score(y_true=labels_groundtruth, y_pred=user_labels, average="micro", zero_division=0), decimals=3)
+            macro_auc = np.round(roc_auc["macro"], decimals=3)
+            micro_auc = np.round(roc_auc["micro"], decimals=3)
             user_statistics.loc[len(user_statistics)] = [user, dificulty, f1_user, f1_weighted, f1_micro, macro_auc,
                                                          micro_auc]
 
