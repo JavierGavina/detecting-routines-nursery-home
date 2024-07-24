@@ -1,4 +1,4 @@
-User,Location,Weekday,Start,End,RelativeFrequency
+User,Location,WeekDay,Start,End,RelativeFrequency
 02A8,Gym,Monday,10:15,12:45,0.0
 02A8,Gym,Monday,13:30,14:29,0.0
 02A8,Gym,Monday,14:30,15:29,0.0

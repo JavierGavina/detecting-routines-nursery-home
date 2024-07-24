@@ -225,7 +225,7 @@ if __name__ == "__main__":
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     for dificulty in config["dificulties"]:
-        user_groundtruth = pd.DataFrame(columns=["User", "Location", "Weekday", "Start", "End", "RelativeFrequency"])
+        user_groundtruth = pd.DataFrame(columns=["User", "Location", "WeekDay", "Start", "End", "RelativeFrequency"])
         for user in config["users"]:
             data_loader = DataLoaderUser(data_dir=config["data_dir"], user=user, dificulty=dificulty)
             for location in tqdm(config["rooms"]):

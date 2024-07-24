@@ -1,0 +1,67 @@
+Dificulty,User,Room,F1-Score,Precision,Recall,AUC
+easy,02A8,Gym,1.0,1.0,1.0,1.0
+easy,02A8,Room,0.929,1.0,0.867,0.933
+easy,02A8,Terrace,1.0,1.0,1.0,1.0
+easy,402E,Gym,1.0,1.0,1.0,1.0
+easy,402E,Room,1.0,1.0,1.0,1.0
+easy,402E,TV Room,1.0,1.0,1.0,1.0
+easy,402E,Therapy Room,1.0,1.0,1.0,1.0
+easy,52EA,Gym,1.0,1.0,1.0,1.0
+easy,52EA,Room,1.0,1.0,1.0,1.0
+easy,52EA,Therapy Room,1.0,1.0,1.0,1.0
+easy,682A,Room,0.87,1.0,0.769,0.885
+easy,682A,TV Room,0.0,0.0,0.0,0.5
+easy,682A,Terrace,1.0,1.0,1.0,1.0
+easy,682A,Therapy Room,1.0,1.0,1.0,1.0
+easy,9FE9,Room,1.0,1.0,1.0,1.0
+easy,9FE9,TV Room,1.0,1.0,1.0,1.0
+easy,9FE9,Terrace,1.0,1.0,1.0,1.0
+easy,9FE9,Therapy Room,1.0,1.0,1.0,1.0
+easy,F176,Gym,1.0,1.0,1.0,1.0
+easy,F176,Room,1.0,1.0,1.0,1.0
+easy,F176,TV Room,0.0,0.0,0.0,0.5
+easy,F176,Therapy Room,1.0,1.0,1.0,1.0
+medium,02A8,Gym,0.0,0.0,0.0,0.5
+medium,02A8,Room,0.947,1.0,0.9,0.95
+medium,02A8,Terrace,1.0,1.0,1.0,1.0
+medium,402E,Gym,1.0,1.0,1.0,1.0
+medium,402E,Room,1.0,1.0,1.0,1.0
+medium,402E,TV Room,1.0,1.0,1.0,1.0
+medium,402E,Therapy Room,1.0,1.0,1.0,1.0
+medium,52EA,Gym,1.0,1.0,1.0,1.0
+medium,52EA,Room,1.0,1.0,1.0,1.0
+medium,52EA,Therapy Room,0.0,0.0,0.0,0.5
+medium,682A,Room,0.87,1.0,0.769,0.871
+medium,682A,TV Room,0.0,0.0,0.0,0.5
+medium,682A,Terrace,1.0,1.0,1.0,1.0
+medium,682A,Therapy Room,1.0,1.0,1.0,1.0
+medium,9FE9,Room,1.0,1.0,1.0,1.0
+medium,9FE9,TV Room,1.0,1.0,1.0,1.0
+medium,9FE9,Terrace,1.0,1.0,1.0,1.0
+medium,9FE9,Therapy Room,1.0,1.0,1.0,1.0
+medium,F176,Gym,1.0,1.0,1.0,1.0
+medium,F176,Room,0.8,1.0,0.667,0.833
+medium,F176,TV Room,0.0,0.0,0.0,0.5
+medium,F176,Therapy Room,1.0,1.0,1.0,1.0
+hard,02A8,Gym,0.0,0.0,0.0,0.5
+hard,02A8,Room,0.571,1.0,0.4,0.7
+hard,02A8,Terrace,0.0,0.0,0.0,0.5
+hard,402E,Gym,0.0,0.0,0.0,0.5
+hard,402E,Room,0.667,1.0,0.5,0.75
+hard,402E,TV Room,1.0,1.0,1.0,1.0
+hard,402E,Therapy Room,0.985,1.0,0.97,0.985
+hard,52EA,Gym,0.0,0.0,0.0,0.5
+hard,52EA,Room,0.556,1.0,0.385,0.692
+hard,52EA,Therapy Room,0.0,0.0,0.0,0.5
+hard,682A,Room,0.44,1.0,0.282,0.62
+hard,682A,TV Room,0.0,0.0,0.0,0.5
+hard,682A,Terrace,0.8,1.0,0.667,0.833
+hard,682A,Therapy Room,0.0,0.0,0.0,0.5
+hard,9FE9,Room,0.444,1.0,0.286,0.622
+hard,9FE9,TV Room,0.889,1.0,0.8,0.894
+hard,9FE9,Terrace,1.0,1.0,1.0,1.0
+hard,9FE9,Therapy Room,0.95,1.0,0.905,0.952
+hard,F176,Gym,0.727,1.0,0.571,0.786
+hard,F176,Room,0.105,1.0,0.056,0.508
+hard,F176,TV Room,0.0,0.0,0.0,0.5
+hard,F176,Therapy Room,0.897,1.0,0.812,0.895
