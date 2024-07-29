@@ -141,8 +141,7 @@ def save_results_plot(*,
         top_days: ``int``: Number of days to plot. Default 7
 
     Raises:
-        ValueError: If the format is not one of pdf, png or svg
-        ValueError: If DRGS is not fitted
+        ValueError: If the format is not one of pdf, png or svg or if the DRGS model is not fitted
     """
 
     if format not in ["pdf", "png", "svg"]:

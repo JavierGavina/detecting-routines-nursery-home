@@ -14,10 +14,10 @@ WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", 
 
 def setup() -> dict:
     """
-    Load the configuration from 'config.yaml'.
+    Loads the configuration settings from a YAML file.
 
     Returns:
-        dict: Configuration dictionary.
+        dict: A dictionary containing configuration settings.
     """
     with open("config.yaml", "r") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)

@@ -22,6 +22,12 @@ from utils.dataloader import DataLoaderUser
 
 
 def setup() -> dict:
+    """
+    Loads the configuration settings from a YAML file.
+
+    Returns:
+        dict: A dictionary containing configuration settings.
+    """
     with open("config.yaml", "r") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
 

@@ -10,10 +10,30 @@ from utils.visualization import save_results_plot, plot_quarters_groundtruth
 
 
 def get_path_results(path: str, user: str, dificulty: str) -> str:
+    """
+    Get the path to the results.
+    Parameters:
+        path: `str` The path to the results.
+        user: `str` The user.
+        dificulty: `str` The difficulty level. Must be one of "easy", "medium", or "hard".
+
+    Returns:
+        str: The path to the results.
+    """
+    if dificulty not in ["easy", "medium", "hard"]:
+        raise ValueError("The difficulty level must be one of 'easy', 'medium', or 'hard'.")
+
     return f"{path}/{user}/{dificulty}"
 
 
 def setup() -> dict:
+    """
+    Loads the configuration settings from a YAML file.
+
+    Returns:
+        dict: A dictionary containing configuration settings
+
+    """
     with open("config.yaml", "r") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
 
@@ -21,6 +41,16 @@ def setup() -> dict:
 
 
 def get_params(config: dict, room: str) -> dict:
+    """
+    Get the parameters for the model depending on the room selected.
+
+    Parameters:
+        config: `dict` The configuration settings.
+        room: `str` The location selected.
+
+    Returns:
+        dict: The parameters for the model.
+    """
     return config["params"]["Room"] if room == "Room" else config["params"]["other"]
 
 
