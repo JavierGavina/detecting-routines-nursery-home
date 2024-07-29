@@ -16,6 +16,8 @@ cd setup
 conda env create --name <env_name> --file = config.yml
 ```
 
+Where `<env_name>` is the name of the environment.
+
 ## Run the routine execution
 
 To run the routine execution, run the following command:
@@ -44,6 +46,9 @@ To run the table calculation of ROC AUC, F1 Score, Precision, Recall, ROC plots 
 ```bash
 python metrics.py
 ```
+
+![](figs/scheme.svg)
+
 
 
 

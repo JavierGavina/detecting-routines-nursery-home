@@ -152,28 +152,6 @@ def analyze_results(path_to_estimated: str, path_to_groundtruth: str, user: str 
                           common_labels)
 
 
-# def labelize_and_probabilities(data: pd.DataFrame, groundtruth: pd.DataFrame) -> tuple[
-#     np.ndarray, np.ndarray, np.ndarray]:
-#     classes = np.union1d(data["Location"].unique(), groundtruth["Location"].unique())
-#     lb = LabelBinarizer()
-#     lb.fit(classes)
-#
-#     unique_intervals = data[['Start', 'End']].drop_duplicates()
-#     labels = []
-#     probabilities = []
-#     labels_groundtruth = []
-#     for weekday in WEEKDAYS:
-#         for start, end in zip(unique_intervals["Start"], unique_intervals["End"]):
-#             query = data.query(f"Start=='{start}' and End=='{end}' and WeekDay=='{weekday}'")
-#             probabilities.append(query.RelativeFrequency.tolist())
-#             labels.append(query.iloc[np.argmax(query.RelativeFrequency)]["Location"])
-#             query_groundtruth = groundtruth.query(f"Start=='{start}' and End=='{end}' and WeekDay=='{weekday}'")
-#             labels_groundtruth.append(
-#                 query_groundtruth["Location"].iloc[np.argmax(query_groundtruth.RelativeFrequency)])
-#
-#     return lb.transform(labels_groundtruth), lb.transform(labels), np.array(probabilities)
-
-
 def labelize_and_probabilities(data: pd.DataFrame, groundtruth: pd.DataFrame) -> tuple[
     np.ndarray, np.ndarray, np.ndarray]:
     classes = np.union1d(data["Location"].unique(), groundtruth["Location"].unique())
@@ -410,16 +388,3 @@ if __name__ == "__main__":
             # plt.legend('', frameon=False)
         plt.savefig(os.path.join(PATH_CONFUSION_MATRIX, f"confusion_matrix_{dificulty}.png"))
         plt.show()
-
-    # easy = os.path.join(config["results_dir"], "easy_frequency_table.csv")
-    # groundtruth = os.path.join(config["data_dir"], "groundtruth.csv")
-    #
-    #
-    # easy_df = get_estimated_from_path(easy, groundtruth)
-    # print(easy_df)
-    # easy_probability = get_probabilities(easy_df)
-    # easy_labels = classificate(easy_df, labelize=True, threshold=0.5)
-    # print(easy_probability)
-    # print(easy_labels)
-
-    # analyze_results(easy, groundtruth)
