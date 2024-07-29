@@ -1,3 +1,12 @@
+"""
+Evaluation of the relative frequency from the clusters of the hierarchy routine for each user and location
+using the inclusion-exclusion principle to get the union of the probabilities from the clusters.
+
+The evaluation is done for each user and location, and the relative frequency of the clusters is calculated
+for each weekday and interval of time specified in the configuration file.
+
+The results are saved in the results directory with the name of the dificulty and the relative frequency table.
+"""
 from typing import Union
 
 import pandas as pd
@@ -115,6 +124,18 @@ def convert_from_minutes_to_hour(minutes: int) -> str:
 
 
 def summarize_cluster(user: str, location: str, cluster: Cluster) -> pd.DataFrame:
+    """
+    Summarize the cluster information and get the relative frequency of the cluster
+
+    Parameters:
+        user: `str` username
+        location: `str` location of the user
+        cluster: `Cluster` cluster to summarize
+
+    Returns:
+        `pd.DataFrame` Table of relative frequencies of the cluster
+    """
+
     intervals_user = config["intervals_of_interest"][user]
     N_days_per_week = config["N_weekdays_on_month"]
     cluster_info = pd.DataFrame(columns=["User", "Location", "Weekday", "Start", "End", "RelativeFrequency"])
@@ -178,6 +199,16 @@ def union_n_columns(df: pd.DataFrame) -> pd.Series:
 
 
 def fusion_all_clusters(routine: Routines) -> Cluster:
+    """
+    Fusion all clusters from a routine in a single cluster
+
+    Parameters:
+        routine: `Routines` routine from a determined hierarchy level of the hierarchy routine
+
+    Returns:
+        `Cluster` fusioned cluster from all clusters of the routine
+    """
+
     fusioned_cluster = routine[0]
     for id_cluster in range(1, len(routine)):
         fusioned_cluster += routine[id_cluster]
@@ -189,7 +220,11 @@ def hierarchy_summarization(*, hierarchy_routine: HierarchyRoutine, key: int, us
     """
     Get the summary of the hierarchy routine for a specific key
     applying the union of the probabilities for each cluster of
-    a specified hierarchy using the inclusion-exclusion principle
+    a specified hierarchy using the inclusion-exclusion principle.
+    In case the number of clusters is greater than 10, the clusters
+    are fused into a single cluster and got its relative frequencies
+    calculated, to avoid the complexity of the inclusion-exclusion
+    principle.
 
     Parameters:
         hierarchy_routine: `HierarchyRoutine` hierarchy routine estimated
@@ -203,6 +238,8 @@ def hierarchy_summarization(*, hierarchy_routine: HierarchyRoutine, key: int, us
 
     relative_table_per_cluster = dict()
     routine_m = hierarchy_routine[key]
+
+    # Using the principle of inclusion-exclusion only for routines with less than 10 clusters
     if len(routine_m) <= 10:
         result = summarize_cluster(user, location, routine_m[0])
         for id_cluster, cluster in enumerate(routine_m):
@@ -212,6 +249,7 @@ def hierarchy_summarization(*, hierarchy_routine: HierarchyRoutine, key: int, us
         joined_columns = union_n_columns(relative_table)
         result["RelativeFrequency"] = joined_columns
 
+    # Fusioning all clusters in a single cluster and getting the relative frequencies
     else:
         print(f"Fusioning all clusters in user: {user}, location: {location}, for hierarchy: {key}")
         fusioned_cluster = fusion_all_clusters(routine_m)
