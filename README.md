@@ -18,9 +18,15 @@ conda env create --name <env_name> --file = config.yml
 
 Where `<env_name>` is the name of the environment.
 
-## Run the routine execution
+## Data
 
-To run the routine execution, run the following command:
+The data used in this project is a synthetic dataset generated using our application web [Synthetic Activity Generation](https://javiergavina.github.io/Synthetic-Activity-Dataset/) using the metadata found on `data/<user>/metada`.  The data is stored in the `data` directory.
+
+## How to run the program
+
+### Routine detection and visualization
+
+To run the routine detection and visualization, run the following command:
 
 ```bash
 python plot_routines.py
@@ -30,7 +36,7 @@ This code will save on the `results` file the results of the routine execution.
 
 The parameters, directory of data and the name of the results directory are on the `config.yaml` file.
 
-## Run the frequency table extraction
+### Run the frequency table extraction
 
 To run the frequency table extraction from the results of the routine execution, run the following command:
 
@@ -39,7 +45,7 @@ python evaluation.py
 ```
 
 
-## Run the metrics calculation
+### Run the metrics calculation
 
 To run the table calculation of ROC AUC, F1 Score, Precision, Recall, ROC plots and confusion matrix from the results of the routine execution, run the following command:
 
