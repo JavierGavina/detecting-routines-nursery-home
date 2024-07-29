@@ -354,61 +354,6 @@ class DRFL:
         return S1.distance(S2) <= R
 
     @staticmethod
-    def __is_overlap(S_i: Subsequence, S_j: Subsequence):
-        """
-        Check if two subsequences overlap by applying the following inequality from the paper:
-
-        (i + p) > j or (j + q) > i
-
-        Where:
-            * i: Starting point of the first subsequence.
-            * j: Starting point of the second subsequence.
-            * p: Length of the first subsequence.
-            * q: Length of the second subsequence.
-
-        Parameters:
-            * S_i: `Subsequence`. The first subsequence with starting point i.
-            * S_j: `Subsequence`. The second subsequence with starting point j.
-
-        Notes:
-            This method is private and cannot be accessed from outside the class.
-
-        Returns:
-             `True` if they overlap, `False` otherwise.
-
-        Raises:
-            TypeError: If S_i or S_j are not instances of Subsequence.
-
-        Examples:
-            >>> import numpy as np
-            >>> S1 = Subsequence(instance=np.array([1, 2, 3]), date=datetime.date(2024, 1, 1), starting_point=0)
-            >>> S2 = Subsequence(instance=np.array([2, 3, 4]), date=datetime.date(2024, 1, 2), starting_point=1)
-            >>> drfl = DRFL(m=3, R=2, C=3, G=4, epsilon=1.0)
-            >>> drfl.__is_overlap(S1, S2)
-            True
-
-            >>> S1 = Subsequence(instance=np.array([1, 2, 3]), date=datetime.date(2024, 1, 1), starting_point=0)
-            >>> S2 = Subsequence(instance=np.array([2, 3, 4]), date=datetime.date(2024, 1, 2), starting_point=4)
-            >>> drfl = DRFL(m=3, R=2, C=3, G=4, epsilon=1.0)
-            >>> drfl.__is_overlap(S1, S2)
-            False
-        """
-
-        # Check if S_i and S_j are instances of Subsequence
-        if not isinstance(S_i, Subsequence) or not isinstance(S_j, Subsequence):
-            raise TypeError(
-                f"S_i and S_j must be instances of Subsequence. Got {type(S_i).__name__} and {type(S_j).__name__} instead")
-
-        # Get the starting point and length of the subsequences
-        start_i, p = S_i.get_starting_point(), len(S_i.get_instance())
-        start_j, q = S_j.get_starting_point(), len(S_j.get_instance())
-
-        # Check if the overlap inequality holds
-        is_overlap = not (start_i + p > start_j) or (start_j + q > start_i)
-
-        return is_overlap
-
-    @staticmethod
     def __inverse_gaussian_distance(N_target: int, N_estimated: int, sigma: float) -> float:
         """
         Compute the inverse gaussian distance between the target and estimated number of instances.
@@ -550,88 +495,6 @@ class DRFL:
 
         self.__sequence.add_sequence(subsequence)  # Add the subsequence to the sequences
 
-    def __not_trivial_match(self, subsequence: Subsequence, cluster: Cluster, start: int, R: int | float) -> bool:
-        """
-        Checks if a subsequence is not a trivial match with any of the instances from the cluster.
-
-        This method returns False if there is not a match between the
-        subsequence and the centroid.
-        It also returns False if there is a match between the subsequence
-        and any subsequence with a starting point between the start
-        parameter and the starting point of the subsequence.
-        Otherwise, it returns True.
-
-        Notes:
-            This method is private and cannot be accessed from outside the class.
-
-        Parameters:
-            * subsequence: `Subsequence`. The subsequence to check.
-            * cluster: `Cluster`. The cluster to check.
-            * start: `int`. Starting point of the subsequence.
-            * R: `int` or `float`. The threshold distance parameter.
-
-        Returns:
-            `bool`. `True` if the subsequence is not a trivial match with any of the instances from the cluster, `False` otherwise.
-
-        Raises:
-             TypeError: If subsequence is not an instance of `Subsequence` or cluster is not an instance of `Cluster`.
-
-        Examples:
-            >>> import numpy as np
-            >>> S1 = Subsequence(instance=np.array([1, 2, 3]), date=datetime.date(2024, 1, 1), starting_point=0)
-            >>> S2 = Subsequence(instance=np.array([2, 3, 4]), date=datetime.date(2024, 1, 2), starting_point=1)
-            >>> cluster = Cluster(centroid=S2, instances=Sequence(subsequence=S2))
-            >>> drfl = DRFL(m=3, R=2, C=3, G=4, epsilon=0.5)
-            >>> drfl.__not_trivial_match(S1, cluster, 0, 2)
-            False
-            >>> drfl.__not_trivial_match(S1, cluster, 1, 2)
-            True
-        """
-
-        # Check if subsequence is an instance of Subsequence and cluster is an instance of Cluster
-        if not isinstance(subsequence, Subsequence) or not isinstance(cluster, Cluster):
-            raise TypeError(
-                f"subsequence and cluster must be instances of Subsequence and Cluster respectively. Got {type(subsequence).__name__} and {type(cluster).__name__} instead")
-
-        # Check if the subsequence is not a trivial match with any of the instances from the cluster
-        if not self.__is_match(S1=subsequence, S2=cluster.centroid, R=R):
-            return False
-
-        # Check if there is a match between the subsequence and any subsequence with a starting point
-        # between the start parameter and the starting point of the subsequence
-        for end in cluster.get_starting_points():
-            for t in reversed(range(start + 1, end)):
-                # If some subsequence is a trivial match with a subsequence from the referenced
-                # starting point, it returns False
-                if self.__is_match(S1=subsequence, S2=self.__sequence.get_by_starting_point(t), R=R):
-                    return False
-
-        return True
-
-    def __drop_consecutive_instances(self, routines: Routines) -> Routines:
-        old_routines = copy.deepcopy(routines)
-        new_routines = Routines()
-
-        for cluster in old_routines:
-            starting_points = cluster.get_starting_points()
-            new_sequence = Sequence()
-            to_keep = [starting_points.index(starting_points[0])]
-            for i in range(1, len(starting_points)):
-                if starting_points[i] - starting_points[i - 1] >= self._m:
-                    to_keep.append(i)
-
-            for i in to_keep:
-                new_sequence.add_sequence(cluster.get_sequences().get_by_starting_point(starting_points[i]))
-
-            instances = new_sequence.get_subsequences(to_array=True)
-            new_centroid = np.mean(instances, axis=0)
-
-            new_cluster = Cluster(centroid=new_centroid, instances=new_sequence)
-            if len(new_cluster) >= self._C:
-                new_routines.add_routine(new_cluster)
-
-        return new_routines
-
     def _subgroup(self, sequence: Sequence, R: float | int, C: int, G: float | int, L: float | int) -> Routines:
         """
         Group the subsequences into clusters based on their magnitude and maximum absolute distance.
@@ -723,131 +586,6 @@ class DRFL:
 
         return filtered_routines
 
-    def __overlapping_test(self, cluster1: Cluster, cluster2: Cluster, epsilon: float) -> tuple[bool, bool]:
-        """
-        Test and handle overlapping clusters by determining the significance of their overlap.
-
-        Overlapping clusters are analyzed to decide if one, both, or none should be kept based on the overlap
-        percentage and the clusters' characteristics. This determination is crucial for maintaining the
-        quality and interpretability of the detected routines. The method employs a two-step process: first,
-        it calculates the number of overlapping instances between the two clusters; then, based on the overlap
-        percentage and the clusters' properties (e.g., size and magnitude), it decides which cluster(s) to retain.
-
-        Parameters:
-            * cluster1: `Cluster`. The first cluster involved in the overlap test.
-            * cluster2: `Cluster`. The second cluster involved in the overlap test.
-            * epsilon: `float`. A threshold parameter that defines the minimum percentage of overlap required for considering an overlap significant. Values range from 0 to 1, where a higher value means a stricter criterion for significance.
-
-        Returns:
-            * tuple[bool, bool]: A tuple containing two boolean values. The first value indicates whether
-                                 cluster1 should be kept (True) or discarded (False). Similarly, the second
-                                 value pertains to cluster2.
-
-
-        Overview of the Method's Logic:
-            * Calculate the number of instances in cluster1 that significantly overlap with any instance in cluster2.
-            * determine the significance of the overlap based on the '_epsilon' parameter: if the number of overlaps exceeds '_epsilon' times the smaller cluster's size, the overlap is considered significant.
-            * In case of significant overlap, compare the clusters based on their size and the cumulative magnitude of their instances. The cluster with either a larger size or a greater cumulative magnitude (in case of a size tie) is preferred.
-            * Return a tuple indicating which clusters should be kept. If the overlap is not significant, both clusters may be retained.
-
-        Note:
-            * This method relies on private helper methods to calculate overlaps and compare cluster properties.
-            * The method does not modify the clusters directly but provides guidance on which clusters to keep or discard.
-
-        Examples:
-            >>> import numpy as np
-            >>> import pandas as pd
-            >>> S1 = Subsequence(instance=np.array([1, 2, 3]), date=datetime.date(2024, 1, 1), starting_point=0)
-            >>> S2 = Subsequence(instance=np.array([2, 3, 4]), date=datetime.date(2024, 1, 2), starting_point=1)
-            >>> cluster1 = Cluster(centroid=S1, instances=Sequence(subsequence=S1))
-            >>> cluster2 = Cluster(centroid=S2, instances=Sequence(subsequence=S2))
-            >>> drfl = DRFL(m=3, R=2, C=3, G=4, epsilon=1.0)
-            >>> drfl.__overlapping_test(cluster1, cluster2, 0.5)
-            (True, False)
-        """
-
-        N = 0  # Initialize counter for number of overlaps
-
-        # Iterate through all instances in cluster1
-        for S_i in cluster1.get_sequences():
-            # Convert instance to Subsequence if needed for overlap checks
-            for S_j in cluster2.get_sequences():
-                # Check for overlap between S_i and S_j
-                if self.__is_overlap(S_i, S_j):
-                    N += 1  # Increment overlap count
-                    break  # Break after finding the first overlap for S_i
-
-        # Calculate the minimum length of the clusters to determine significance of overlap
-        min_len = min(len(cluster1), len(cluster2))
-
-        # Determine if the overlap is significant based on _epsilon and the minimum cluster size
-        if N > epsilon * min_len:
-
-            # Calculate cumulative magnitudes for each cluster to decide which to keep
-            mag_cluster1 = cluster1.cumulative_magnitude()
-            mag_cluster2 = cluster2.cumulative_magnitude()
-
-            # Keep the cluster with either more instances or, in a tie, the greater magnitude
-            if len(cluster1) > len(cluster2) or (len(cluster1) == len(cluster2) and mag_cluster1 > mag_cluster2):
-                return True, False
-            else:
-                return False, True
-        else:
-            # If overlap is not significant, propose to keep both clusters
-            return True, True
-
-    def __obtain_keep_indices(self, epsilon: float) -> list[int]:
-        """
-        Obtain the indices of the clusters to keep based on the overlap test.
-
-        Parameters:
-            epsilon: `float`. A threshold parameter that defines the minimum percentage of overlap required for considering an overlap significant. Values range from 0 to 1, where a higher value means a stricter criterion for significance.
-
-        Returns:
-            `list[int]`. The indices of the clusters to keep.
-
-        Raises:
-             ValueError: If _epsilon is not between 0 and 1.
-
-        Examples:
-            >>> import numpy as np
-            >>> import pandas as pd
-            >>> S1 = Subsequence(instance=np.array([1, 2, 3]), date=datetime.date(2024, 1, 1), starting_point=0)
-            >>> S2 = Subsequence(instance=np.array([2, 3, 4]), date=datetime.date(2024, 1, 2), starting_point=4)
-            >>> cluster1 = Cluster(centroid=S1, instances=Sequence(subsequence=S1))
-            >>> cluster2 = Cluster(centroid=S2, instances=Sequence(subsequence=S2))
-            >>> drfl = DRFL(m=3, R=2, C=3, G=4, epsilon=1.0)
-            >>> drfl.__obtain_keep_indices(1)
-            [0, 1]
-
-            >>> S1 = Subsequence(instance=np.array([1, 2, 3]), date=datetime.date(2024, 1, 1), starting_point=0)
-            >>> S2 = Subsequence(instance=np.array([2, 3, 4]), date=datetime.date(2024, 1, 2), starting_point=1)
-            >>> cluster1 = Cluster(centroid=S1, instances=Sequence(subsequence=S1))
-            >>> cluster2 = Cluster(centroid=S2, instances=Sequence(subsequence=S2))
-            >>> drfl = DRFL(m=3, R=2, C=3, G=4, epsilon=0.5)
-            >>> drfl.__obtain_keep_indices(0.5)
-            [1]
-        """
-
-        if epsilon < 0 or epsilon > 1:
-            raise ValueError(f"epsilon must be between 0 and 1. Got {epsilon} instead")
-
-        # Prepare to test and handle overlapping clusters
-        keep_indices = set(range(len(self.__routines)))  # Initially, assume all clusters are to be kept
-
-        for i in range(len(self.__routines) - 1):
-            for j in range(i + 1, len(self.__routines)):
-                if i in keep_indices and j in keep_indices:  # Process only if both clusters are still marked to keep
-                    keep_i, keep_j = self.__overlapping_test(self.__routines[i], self.__routines[j], epsilon)
-
-                    # Update keep indices based on OLTest outcome
-                    if not keep_i:
-                        keep_indices.remove(i)
-                    if not keep_j:
-                        keep_indices.remove(j)
-
-        return list(keep_indices)
-
     def fit(self, time_series: pd.Series) -> None:
         """
         Fits the time series data to the `DRFL` algorithm to discover routines.
@@ -882,20 +620,9 @@ class DRFL:
         # maximum absolute distance and filter the clusters based on their frequency
         self.__routines = self._subgroup(sequence=self.__sequence, R=self._R, C=self._C, G=self._G, L=self._L)
 
-        # Obtain the indices of the clusters to keep based on the overlap test
-        # keep_indices = self.__obtain_keep_indices(self._epsilon)
-
-        # Filter self.routines to keep only those clusters marked for keeping
-        # if len(self.__routines) > 0:
-        #     to_drop = [k for k in range(len(self.__routines)) if k not in keep_indices]
-        #     self.__routines = self.__routines.drop_indexes(to_drop)
-
         # Remove Subsets
         if len(self.__routines) > 0:
             self.__routines = self.__routines.remove_subsets()
-
-            # Drop consecutive instances
-            # self.__routines = self.__drop_consecutive_instances(self.__routines)
 
         if len(self.__routines) == 0:
             warnings.warn("No routines have been discovered", UserWarning)
