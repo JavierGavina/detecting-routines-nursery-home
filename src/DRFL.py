@@ -17,7 +17,9 @@ The parameters:
     * R: distance threshold
     * C: Frequency threshold
     * G: magnitude threshold
+    * L: Inverse magnitude threshold
     * epsilon: Overlap Parameter
+    * fusion_distance: Fusion distance parameter
 
 Public methods:
     * fit: Fit the time series to the algorithm.
@@ -33,7 +35,6 @@ Public methods:
             - figsize: `Optional[tuple[int, int]]`. Size of the figure.
             - xlim: `Optional[tuple[int, int]]`. Limit of the x axis with starting points.
             - save_dir: `Optional[str]`. Directory to save the plot.
-
 """
 import sys
 import datetime
@@ -630,24 +631,6 @@ class DRFL:
                 new_routines.add_routine(new_cluster)
 
         return new_routines
-
-    # def __drop_consecutive_instances(self, cluster: Cluster) -> Cluster:
-    #     starting_points = cluster.get_starting_points()
-    #     instances = cluster.get_sequences().get_subsequences(to_array=True)
-    #     sequence = Sequence()
-    #
-    #     for i in range(len(starting_points) - 1):
-    #         # if the next starting point is consecutive, we skip it
-    #         if starting_points[i + 1] - starting_points[i] >= self._m:
-    #             sequence.add_sequence(
-    #                 Subsequence(instance=instances[i], date=cluster.get_dates()[i], starting_point=starting_points[i]))
-    #
-    #     instances = sequence.get_subsequences(to_array=True)
-    #     new_centroid = np.mean(instances, axis=0)
-    #
-    #     new_cluster = Cluster(centroid=new_centroid, instances=sequence)
-    #
-    #     return new_cluster
 
     def _subgroup(self, sequence: Sequence, R: float | int, C: int, G: float | int, L: float | int) -> Routines:
         """
@@ -1504,37 +1487,19 @@ class DRGS(DRFL):
 
         return left + right
 
-    # @staticmethod
-    # def __filtered_repeated_left_right_routines(parent_routine: Routines, child_routine: Routines):
-    #     filtered_child = Routines()
-    #     for parent in parent_routine:
-    #         left_child = []
-    #         right_child = []
-    #         for child in child_routine:
-    #             new_val = {"child": child, "n_instances": len(child.get_sequences()), "cum_mag": child.cumulative_magnitude()}
-    #             if ClusterTree().is_left_child(parent, child):
-    #                 left_child.append(new_val)
-    #
-    #             if ClusterTree().is_right_child(parent, child):
-    #                 right_child.append(new_val)
-    #
-    #         for left in left_child:
-    #             max_left = max(left_child, key=lambda x: x["n_instances"])
-    #             if left["n_instances"] == max_left["n_instances"]:
-    #                 if left["child"] not in filtered_child:
-    #                     filtered_child.add_routine(left["child"])
-    #                     break
-    #
-    #         for right in right_child:
-    #             max_right = max(right_child, key=lambda x: x["n_instances"])
-    #             if right["n_instances"] == max_right["n_instances"]:
-    #                 if right["child"] not in filtered_child:
-    #                     filtered_child.add_routine(right["child"])
-    #                     break
-    #
-    #     return filtered_child
     @staticmethod
-    def __filtered_repeated_left_right_routines(parent_routine: Routines, child_routine: Routines):
+    def __filtered_repeated_left_right_routines(parent_routine: Routines, child_routine: Routines) -> Routines:
+        """
+        Filter the left and right routines to keep only the most frequent and most significant clusters.
+
+        Parameters:
+            parent_routine: `Routines`. The parent routine.
+            child_routine: `Routines`. The child routine.
+
+        Returns:
+            `Routines`. The filtered child routine.
+        """
+
         filtered_child = Routines()
         for parent in parent_routine:
             left_child = []
@@ -1548,6 +1513,7 @@ class DRGS(DRFL):
                 if ClusterTree().is_right_child(parent, child):
                     right_child.append(new_val)
 
+            # If there are no left or right children, add the parent to the filtered child
             for left in left_child:
                 max_left = max(left_child, key=lambda x: x["n_instances"])
                 if left["n_instances"] == max_left["n_instances"]:
@@ -1563,6 +1529,65 @@ class DRGS(DRFL):
                         break
 
         return filtered_child
+
+    @staticmethod
+    def __remove_overlapping_clusters(routine: Routines, epsilon: Union[float, int]) -> Routines:
+        """
+        Remove overlapping clusters from the routine if the ratio of overlapping is greater than epsilon.
+
+        Parameters:
+            routine: `Routines`. The routine to remove overlapping clusters.
+            epsilon: `float | int`. The threshold to remove overlapping clusters.
+
+        Returns:
+            `Routines`. The routine without overlapping clusters.
+        """
+
+        clusters_to_drop: list[Cluster] = []
+
+        if epsilon == 1:
+            return routine
+
+        for i in range(len(routine)):
+            for j in range(i + 1, len(routine)):
+
+                if routine[j] in clusters_to_drop:
+                    continue
+
+                # If the clusters are overlapping
+                if routine[i].is_overlapping(routine[j], epsilon):
+
+                    len_i = len(routine[i].get_sequences())
+                    len_j = len(routine[j].get_sequences())
+
+                    # Drop the cluster with the highest number of instances
+                    if len_i > len_j:
+                        clusters_to_drop.append(routine[j])
+
+                    elif len_j > len_i:
+                        clusters_to_drop.append(routine[i])
+
+                    # If the number of instances is the same, drop the cluster with lower magnitude
+                    else:
+                        magnitude_i = routine[i].cumulative_magnitude()
+                        magnitude_j = routine[j].cumulative_magnitude()
+
+                        if magnitude_i > magnitude_j:
+                            clusters_to_drop.append(routine[j])
+
+                        elif magnitude_j > magnitude_i:
+                            clusters_to_drop.append(routine[i])
+
+                        else:
+                            random_idx = int(np.random.choice([i, j]))
+                            clusters_to_drop.append(routine[random_idx])
+
+        # Create a new routine without the overlapping clusters
+        new_routine = Routines()
+        for cluster in routine:
+            if cluster not in clusters_to_drop:
+                new_routine.add_routine(cluster)
+        return new_routine
 
     def __grow_from_left(self, sequence: Sequence) -> Sequence:
         """
@@ -1748,7 +1773,17 @@ class DRGS(DRFL):
         super().fit(time_series)
         return super().get_results()
 
-    def __similar_clusters_fusion(self, routine: Routines):
+    def __similar_clusters_fusion(self, routine: Routines) -> Routines:
+        """
+        Fusionate each cluster with a centroid distance less than the fusion distance.
+
+        Parameters:
+            routine: `Routines`. The routine to fusionate the clusters.
+
+        Returns:
+            `Routines`. The routine with the clusters fusionated.
+        """
+
         new_routine = Routines()
         new_routine.add_routine(routine[0])
         for i in range(len(routine)):
@@ -1759,52 +1794,6 @@ class DRGS(DRFL):
                     new_routine.add_routine(routine[j])
 
         new_routine = new_routine.drop_duplicates()
-        return new_routine
-
-    def __remove_overlapping_clusters(self, routine: Routines, epsilon: Union[float, int]) -> Routines:
-        clusters_to_drop: list[Cluster] = []
-
-        if epsilon == 1:
-            return routine
-
-        for i in range(len(routine)):
-            for j in range(i + 1, len(routine)):
-
-                if routine[j] in clusters_to_drop:
-                    continue
-
-                # If the clusters are overlapping
-                if routine[i].is_overlapping(routine[j], epsilon):
-
-                    len_i = len(routine[i].get_sequences())
-                    len_j = len(routine[j].get_sequences())
-
-                    # Drop the cluster with the highest number of instances
-                    if len_i > len_j:
-                        clusters_to_drop.append(routine[j])
-
-                    elif len_j > len_i:
-                        clusters_to_drop.append(routine[i])
-
-                    # If the number of instances is the same, drop the cluster with lower magnitude
-                    else:
-                        magnitude_i = routine[i].cumulative_magnitude()
-                        magnitude_j = routine[j].cumulative_magnitude()
-
-                        if magnitude_i > magnitude_j:
-                            clusters_to_drop.append(routine[j])
-
-                        elif magnitude_j > magnitude_i:
-                            clusters_to_drop.append(routine[i])
-
-                        else:
-                            random_idx = int(np.random.choice([i, j]))
-                            clusters_to_drop.append(routine[random_idx])
-
-        new_routine = Routines()
-        for cluster in routine:
-            if cluster not in clusters_to_drop:
-                new_routine.add_routine(cluster)
         return new_routine
 
     def fit(self, time_series: pd.Series, verbose: bool = True) -> None:
@@ -2002,399 +1991,6 @@ class DRGS(DRFL):
                 if len(routine) > 1 and i < len(routine) - 1:
                     print("\n\t", "-" * 80)
 
-    def plot_hierarchical_results(self, title_fontsize: int = 20, show_xticks: bool = True,
-                                  show_horizontal_lines: bool = True, show_background_annotations: bool = True,
-                                  xticks_fontsize: int = 20, yticks_fontsize: int = 20, labels_fontsize: int = 20,
-                                  figsize: tuple[int, int] = (30, 10), coloured_text_fontsize: int = 20,
-                                  text_fontsize: int = 15, linewidth_bars: Union[int, float] = 1.5,
-                                  vline_width: Union[int, float] = 1.5, hline_width: Union[int, float] = 1.5,
-                                  xlim: Optional[tuple[int, int]] = None, save_dir: Optional[str] = None):
-
-        """
-        This method uses matplotlib to plot the results of the algorithm.
-        The plot shows the time series data with vertical dashed lines indicating the start of each discovered routine.
-        The color of each routine is determined by the order in which they were discovered.
-        Each row in the plot represents a different hierarchy level,
-        and each column represents a different routine within that hierarchy level.
-
-        Parameters:
-            * title_fontsize: `int` (default is 20). Size of the title plot.
-            * show_xticks: `bool` (default is True). Whether to show the xticks or not.
-            * show_horizontal_lines: `bool` (default is True). Whether to show the horizontal lines or not.
-            * show_background_annotations: `bool` (default is True). Whether to show the height of colorless bars or not.
-            * xticks_fontsize: `int` (default is 20). Size of the xticks.
-            * yticks_fontsize: `int (default is 20)`. Size of the yticks.
-            * labels_fontsize: `int` (default is 20). Size of the labels.
-            * figsize: `tuple[int, int]` (default is (30, 10)). Size of the figure.
-            * coloured_text_fontsize: `int` (default is 20). Size of the coloured text.
-            * text_fontsize: `int` (default is 15). Size of the text.
-            * linewidth_bars: `int` | `float` (default is 1.5). Width of the bars in the plot.
-            * vline_width: `int` | `float` (default is 1.5). Width of the vertical lines in the plot.
-            * hline_width: `int` | `float` (default is 1.5). Width of the horizontal lines in the plot.
-            * xlim: `tuple[int, int]` (default is None). Limit of the x-axis with starting points.
-            * save_dir: `str` (default is None). Directory to save the plot.
-
-        Notes:
-            This method has to be executed after the fit method to ensure that routines have been discovered and are ready to be displayed.
-
-        Examples:
-            >>> import pandas as pd
-            >>> time_series = pd.Series([1, 3, 6, 4, 2, 1, 2, 3, 6, 4, 1, 1, 3, 6, 4, 1])
-            >>> time_series.index = pd.date_range(start="2024-01-01", periods=len(time_series))
-            >>> drgs = DRGS(length_range=(3, 8), R=2, C=3, G=4, epsilon=0.5)
-            >>> drgs.fit(time_series)
-            >>> drgs.plot_hierarchical_results()
-        """
-
-        # Check the validity of the parameters
-        args = locals()
-        super()._check_plot_params(**args)
-
-        # Check if the model has been fitted before plotting
-        if not self.__already_fitted:
-            raise RuntimeError("The model has not been fitted yet. Please call the fit method before using this method")
-
-        # Calculate the number of clusters per routine and determine plot dimensions
-        n_cluster_per_routine = [len(routine) for routine in self.__hierarchical_routines.values]
-        n_columns = max(n_cluster_per_routine)
-        n_rows = len(self.__hierarchical_routines)
-        maximum = max(self.time_series)
-
-        # Set default x-axis limits if not provided
-        xlim = xlim or (0, len(self.time_series))
-
-        # Create the figure, grid layout and base colors for the plot
-        fig = plt.figure(figsize=figsize)
-        gs = gridspec.GridSpec(n_rows, n_columns, figure=fig)
-        base_colors = cm.rainbow(np.linspace(0, 1, n_columns))
-
-        # Plot each routine in the hierarchical routines
-        for i, (length, routine) in enumerate(self.__hierarchical_routines.items):
-            for j, cluster in enumerate(routine):
-                # Add subplot for each cluster; use entire row if only one cluster
-                fig.add_subplot(gs[i, :]) if len(routine) == 1 else fig.add_subplot(gs[i, j])
-
-                # Add horizontal lines for the minimum and maximum thesholds if required
-                if show_horizontal_lines:
-                    plt.axhline(y=self._G, color=base_colors[j], linestyle=":", linewidth=hline_width)
-                    plt.axhline(y=self._L, color=base_colors[j], linestyle=":", linewidth=hline_width)
-
-                # Set the colors for the time series bars
-                colors = ["gray"] * len(self.time_series)
-                for sp in cluster.get_starting_points():
-                    # Plot a vertical-dashed line at the starting point of each subsequence in the cluster within the x-axis limits
-                    if xlim[0] <= sp <= xlim[1]:
-                        plt.axvline(x=sp, color=base_colors[j], linestyle="--", linewidth=vline_width)
-                        # Annotate the time series points with their values
-                        for k in range(cluster.length_cluster_subsequences):
-                            if sp + k <= xlim[1]:
-                                plt.text(x=sp + k - 0.05, y=self.time_series.iloc[sp + k] - 0.8,
-                                         s=f"{self.time_series.iloc[sp + k]}", fontsize=coloured_text_fontsize,
-                                         backgroundcolor="white", color=base_colors[j])
-
-                                colors[sp + k] = base_colors[j]
-
-                # Annotate the value of each bar that is not colored if required
-                if show_background_annotations:
-                    for k in range(len(self.time_series)):
-                        # if the bar is not coloured (its value is gray and not an array), annotate the value
-                        if xlim[0] < k < xlim[1] and not isinstance(colors[k], np.ndarray):
-                            plt.text(x=k - 0.05, y=self.time_series.iloc[k] + 0.8,
-                                     s=f"{self.time_series.iloc[k]}", fontsize=text_fontsize,
-                                     color="black")
-
-                # Customize the title for each subplot
-                plt.title(f"Hierarchy {length} Routine {j + 1}", fontsize=title_fontsize)
-
-                # Plot the time series data as a bar plot
-                plt.bar(np.arange(0, len(self.time_series)), self.time_series.values,
-                        color=colors, edgecolor="black", linewidth=linewidth_bars)
-
-                # Set the ticks on the x-axis and y-axis
-                if show_xticks:
-                    plt.xticks(ticks=np.arange(xlim[0], xlim[1]),
-                               labels=np.arange(xlim[0], xlim[1]),
-                               fontsize=xticks_fontsize)
-                else:
-                    plt.xticks([])
-
-                plt.yticks(fontsize=yticks_fontsize)
-
-                # Set the labels for the x-axis and y-axis
-                plt.xlabel("Starting Points", fontsize=labels_fontsize)
-                plt.ylabel("Magnitude", fontsize=labels_fontsize)
-
-                # Set the limits of the x-axis and y-axis
-                plt.xlim(xlim[0] - 0.5, xlim[1])
-                plt.ylim(0, int(maximum + np.ceil(maximum * 0.1)))
-
-        # Adjust the layout of the plot
-        plt.tight_layout()
-
-        # Save the plot to the specified directory if provided
-        if save_dir:
-            plt.savefig(save_dir)
-
-        # # Display the plot
-        # plt.show()
-
-        # Close the plot
-        plt.close()
-
-    def plot_separate_hierarchical_results(self, title_fontsize: int = 20, show_xticks: bool = True,
-                                           show_horizontal_lines: bool = True, show_background_annotations: bool = True,
-                                           xticks_fontsize: int = 20, yticks_fontsize: int = 20,
-                                           labels_fontsize: int = 20,
-                                           figsize: tuple[int, int] = (30, 10), coloured_text_fontsize: int = 20,
-                                           text_fontsize: int = 15, linewidth_bars: Union[int, float] = 1.5,
-                                           vline_width: Union[int, float] = 1.5, hline_width: Union[int, float] = 1.5,
-                                           xlim: Optional[tuple[int, int]] = None, save_dir: Optional[str] = None,
-                                           top_hierarchy: Optional[int] = None):
-
-        """
-        This method uses matplotlib to plot the results of the algorithm.
-        The plot shows the time series data with vertical dashed lines indicating the start of each discovered routine.
-        The color of each routine is determined by the order in which they were discovered.
-        Each row in the plot represents a different hierarchy level,
-        and each column represents a different routine within that hierarchy level.
-
-        Parameters:
-            * title_fontsize: `int` (default is 20). Size of the title plot.
-            * show_xticks: `bool` (default is True). Whether to show the xticks or not.
-            * show_horizontal_lines: `bool` (default is True). Whether to show the horizontal lines or not.
-            * show_background_annotations: `bool` (default is True). Whether to show the height of colorless bars or not.
-            * xticks_fontsize: `int` (default is 20). Size of the xticks.
-            * yticks_fontsize: `int (default is 20)`. Size of the yticks.
-            * labels_fontsize: `int` (default is 20). Size of the labels.
-            * figsize: `tuple[int, int]` (default is (30, 10)). Size of the figure.
-            * coloured_text_fontsize: `int` (default is 20). Size of the coloured text.
-            * text_fontsize: `int` (default is 15). Size of the text.
-            * linewidth_bars: `int` | `float` (default is 1.5). Width of the bars in the plot.
-            * vline_width: `int` | `float` (default is 1.5). Width of the vertical dashed lines.
-            * hline_width: `int` | `float` (default is 1.5). Width of the horizontal dashed lines.
-            * xlim: `tuple[int, int]` (default is None). Limit of the x-axis with starting points.
-            * save_dir: `str` (default is None). Directory to save the plot.
-
-        Notes:
-            This method has to be executed after the fit method to ensure that routines have been discovered and are ready to be displayed.
-
-        Examples:
-            >>> import pandas as pd
-            >>> time_series = pd.Series([1, 3, 6, 4, 2, 1, 2, 3, 6, 4, 1, 1, 3, 6, 4, 1])
-            >>> time_series.index = pd.date_range(start="2024-01-01", periods=len(time_series))
-            >>> drgs = DRGS(length_range=(3, 8), R=2, C=3, G=4, epsilon=0.5)
-            >>> drgs.fit(time_series)
-            >>> drgs.plot_separate_hierarchical_results()
-        """
-
-        # Check the validity of the parameters
-        args = locals()
-        super()._check_plot_params(**args)
-
-        # Check if the model has been fitted before plotting
-        if not self.__already_fitted:
-            raise RuntimeError("The model has not been fitted yet. Please call the fit method before using this method")
-
-        all_hierarchies = self.__hierarchical_routines.keys
-        if top_hierarchy is not None:
-            if not isinstance(top_hierarchy, int):
-                raise TypeError(f"top_hierarchy must be an integer. Got {type(top_hierarchy).__name__} instead.")
-
-            if all_hierarchies[0] > top_hierarchy:
-                raise ValueError(
-                    f"top_hierarchy must be greater than lower existent hierarchy {all_hierarchies[0]}. Got {top_hierarchy} instead.")
-
-        # set the top hierarchy to the maximum hierarchy if not provided
-        top_hierarchy = top_hierarchy or all_hierarchies[-1]
-
-        # Calculate the number of clusters per routine and determine plot dimensions
-        n_cluster_per_routine = [len(routine) for routine in self.__hierarchical_routines.values]
-        n_columns = max(n_cluster_per_routine)
-        base_colors = cm.rainbow(np.linspace(0, 1, n_columns))
-        maximum = max(self.time_series)
-
-        # Set default x-axis limits if not provided
-        xlim = xlim or (0, len(self.time_series))
-
-        # Plot each routine in the hierarchical routines
-        for i, (length, routine) in enumerate(self.__hierarchical_routines.items):
-            # Create the figure, grid layout and base colors for the plot
-            fig = plt.figure(figsize=figsize) if len(routine) > 1 else plt.figure(
-                figsize=(figsize[0], int(figsize[1] // 2)))
-            gs = gridspec.GridSpec(len(routine), 1, figure=fig)
-
-            for j, cluster in enumerate(routine):
-                # Add subplot for each cluster
-                fig.add_subplot(gs[j])
-
-                # Add horizontal lines for the minimum and maximum thesholds if required
-                if show_horizontal_lines:
-                    plt.axhline(y=self._G, color=base_colors[j], linestyle=":", linewidth=hline_width)
-                    plt.axhline(y=self._L, color=base_colors[j], linestyle=":", linewidth=hline_width)
-
-                # Set the colors for the time series bars
-                colors = ["gray"] * len(self.time_series)
-
-                for sp in cluster.get_starting_points():
-                    # Plot a vertical-dashed line at the starting point of each subsequence in the cluster within the x-axis limits
-                    if xlim[0] <= sp <= xlim[1]:
-                        plt.axvline(x=sp, color=base_colors[j], linestyle="--", linewidth=vline_width)
-                        # Annotate the time series points with their values
-                        for k in range(cluster.length_cluster_subsequences):
-                            if sp + k <= xlim[1]:
-                                plt.text(x=sp + k - 0.05, y=self.time_series.iloc[sp + k] - 0.8,
-                                         s=f"{self.time_series.iloc[sp + k]}", fontsize=coloured_text_fontsize,
-                                         backgroundcolor="white", color=base_colors[j])
-
-                                colors[sp + k] = base_colors[j]
-
-                # Annotate the value of each bar that is not colored if required
-                if show_background_annotations:
-                    for k in range(len(self.time_series)):
-                        # if the bar is not coloured (its value is gray and not an array), annotate the value
-                        if xlim[0] < k < xlim[1] and not isinstance(colors[k], np.ndarray):
-                            plt.text(x=k - 0.05, y=self.time_series.iloc[k] + 0.8,
-                                     s=f"{self.time_series.iloc[k]}", fontsize=text_fontsize,
-                                     color="black")
-
-                # Customize the title for each subplot
-                plt.title(f"Hierarchy {length} Routine {j + 1}", fontsize=title_fontsize)
-
-                # Plot the time series data as a bar plot
-                plt.bar(np.arange(0, len(self.time_series)), self.time_series.values,
-                        color=colors, edgecolor="black", linewidth=linewidth_bars)
-
-                # Set the ticks on the x-axis and y-axis
-                if show_xticks:
-                    plt.xticks(ticks=np.arange(xlim[0], xlim[1]),
-                               labels=np.arange(xlim[0], xlim[1]),
-                               fontsize=xticks_fontsize)
-                else:
-                    plt.xticks([])
-
-                plt.yticks(fontsize=yticks_fontsize)
-
-                # Set the labels for the x-axis and y-axis
-                plt.xlabel("Starting Points", fontsize=labels_fontsize)
-                plt.ylabel("Magnitude", fontsize=labels_fontsize)
-
-                # Set the limits of the x-axis and y-axis
-                plt.xlim(xlim[0] - 0.5, xlim[1])
-                plt.ylim(0, int(maximum + np.ceil(0.2 * maximum)))
-
-            # Adjust the layout of the plot
-            plt.tight_layout()
-
-            # Save the plot to the specified directory if provided
-            if save_dir:
-                plt.savefig(f"{save_dir}/hierarchy_{length}.png")
-
-            # plt.show()
-            plt.close()
-            if length >= top_hierarchy:
-                break
-
-    def results_per_hour_day(self, top_days: int = 30, figsize: tuple[int, int] = (30, 30), bars_linewidth: int = 1.5,
-                             show_background_annotations: bool = True, title_fontsize: int = 20,
-                             coloured_text_fontsize: int = 20, text_fontsize: int = 15,
-                             show_grid: bool = False, show_hlines: bool = True,
-                             vline_width: Union[int, float] = 3,
-                             show_plot: bool = True,
-                             format: str = "png",
-                             save_dir: Optional[str] = None):
-
-        tree = self.__hierarchical_routines.convert_to_cluster_tree()
-        date = self.time_series.index
-        top_days = min(top_days, len(date) // 24)
-        base_colors = cm.rainbow(np.linspace(0, 1, len(tree.name_nodes)))
-        # Iterate over the hierarchy levels and routines
-        for cluster in tree.nodes:
-            # Metadata of node
-            name = tree.get_name_node(cluster)
-            index = tree.get_index(cluster)
-            hierarchy, id_clust = name.split("-")
-            hierarchy, id_clust = int(hierarchy), int(id_clust)
-
-            # Get the starting points and dates of the cluster
-            starting_points = cluster.get_starting_points()
-
-            fig = plt.figure(figsize=figsize)
-            gs = gridspec.GridSpec(top_days, 1, figure=fig)
-            barcolors = ["gray"] * 24 * top_days
-            x_hour_minutes = [f"{hour:02}:00" for hour in range(24)]
-
-            grouped_sp = []
-            for day in range(top_days):
-                day_sps = []
-                for hour in range(24):
-                    if day * 24 + hour in starting_points:
-                        day_sps.append(day * 24 + hour)
-
-                grouped_sp.append(day_sps)
-
-            for sp in starting_points:
-                for k in range(hierarchy):
-                    if sp + k < top_days * 24:
-                        barcolors[sp + k] = base_colors[index - 1]
-
-            # divide barcolors in list of sublists of length 24 elements
-            grouped_barcolors = [barcolors[i:i + 24] for i in range(0, len(barcolors), 24)]
-
-            for i in range(top_days):
-                fig.add_subplot(gs[i, 0])
-
-                vlines = [x - 24 * i for x in grouped_sp[i]]
-
-                # for vline in vlines:
-                #     plt.axvline(x=vline, color=base_colors[index - 1], linestyle="--", linewidth=vline_width)
-                #     for k in range(hierarchy):
-                #         if vline + k < 24:
-                #             plt.text(vline + k - 0.05, self.time_series[vline + k] - 0.8,
-                #                     s=f"{self.time_series[vline + k]}", fontsize=coloured_text_fontsize,
-                #                     backgroundcolor="white", color=base_colors[index - 1])
-                for vline in vlines:
-                    plt.axvline(x=vline, color=base_colors[index - 1], linestyle="--", linewidth=vline_width)
-
-                for k in range(24):
-                    if isinstance(grouped_barcolors[i][k], np.ndarray):
-                        plt.text(k - 0.05, self.time_series.iloc[i * 24 + k] - 0.8,
-                                 s=f"{self.time_series.iloc[i * 24 + k]}", fontsize=coloured_text_fontsize,
-                                 backgroundcolor="white", color=base_colors[index - 1])
-
-                plt.bar(np.arange(0, 24, 1), self.time_series.iloc[i * 24:(i + 1) * 24],
-                        color=grouped_barcolors[i], edgecolor="black", linewidth=bars_linewidth)
-
-                if show_background_annotations:
-                    for k in range(24):
-                        if not isinstance(grouped_barcolors[i][k], np.ndarray):
-                            plt.text(k - 0.05, self.time_series.iloc[i * 24 + k] + 0.8,
-                                     s=f"{self.time_series.iloc[i * 24 + k]}", fontsize=text_fontsize,
-                                     color="black")
-
-                plt.title(
-                    f"Node: {name}; Date {date[i * 24].year} / {date[i * 24].month} / {date[i * 24].day}",
-                    fontsize=title_fontsize)
-
-                plt.xlabel("Time", fontsize=15)
-                plt.ylabel("N minutes", fontsize=15)
-                plt.ylim(0, 75)
-                plt.xlim(-1, 25)
-                plt.xticks(np.arange(0, 24, 1), x_hour_minutes, rotation=90)
-                if show_grid:
-                    plt.grid(True)
-
-                if show_hlines:
-                    plt.axhline(y=self._G, color=base_colors[index - 1], linestyle=":", linewidth=1.5)
-
-            plt.tight_layout()
-
-            if save_dir is not None:
-                plt.savefig(f"{save_dir}/node_{hierarchy:03}-{id_clust:03}.{format}", format=format)
-
-            # if show_plot:
-            #     plt.show()
-            plt.close()
-
     def results_per_quarter_hour(self, top_days: int = 30, figsize: tuple[int, int] = (30, 30),
                                  bars_linewidth: int = 1.5,
                                  show_background_annotations: bool = True, title_fontsize: int = 20,
@@ -2406,6 +2002,27 @@ class DRGS(DRFL):
                                  labels_fontsize: int = 20,
                                  xlim: Optional[tuple[str, str]] = None,
                                  save_dir: Optional[str] = None):
+
+        """
+        Plot the discovered routines in the time series data by coloring the detected instances for each cluster.
+
+        Parameters:
+            * top_days: `int`. The number of days to plot the routines.
+            * figsize: `tuple[int, int]`. The size of the figure.
+            * bars_linewidth: `int`. The width of the bars.
+            * show_background_annotations: `bool`. Whether to show the background annotations.
+            * title_fontsize: `int`. The fontsize of the title.
+            * coloured_text_fontsize: `int`. The fontsize of the coloured text.
+            * text_fontsize: `int`. The fontsize of the text.
+            * show_grid: `bool`. Whether to show the grid.
+            * show_hlines: `bool`. Whether to show the horizontal lines.
+            * vline_width: `int | float`. The width of the vertical lines.
+            * show_plot: `bool`. Whether to show the plot.
+            * format: `str`. The format to save the plot.
+            * labels_fontsize: `int`. The fontsize of the labels.
+            * xlim: `tuple[str, str]`. The limits of the x-axis.
+            * save_dir: `str`. The directory to save the plot.
+        """
 
         tree = self.__hierarchical_routines.convert_to_cluster_tree()
         date = self.time_series.index
@@ -2514,70 +2131,7 @@ class DRGS(DRFL):
             if save_dir is not None:
                 plt.savefig(f"{save_dir}/node_{hierarchy:03}-{id_clust:03}.{format}", format=format)
 
-            # if show_plot:
-            #     plt.show()
+            if show_plot:
+                plt.show()
 
             plt.close()
-
-    # def plot_results_per_day(self, top_days: int = 30, figsize: tuple[int, int] = (30, 30), bars_linewidth: int = 1.5,
-    #                          show_background_annotations: bool = True, title_fontsize: int = 20,
-    #                          coloured_text_fontsize: int = 20, text_fontsize: int = 15,
-    #                          show_grid: bool = False, vline_width: Union[int, float] = 3,
-    #                          save_dir: Optional[str] = None):
-    #
-    #     tree = self.__hierarchical_routines.convert_to_cluster_tree()
-    #     date = self.time_series.index
-    #     top_days = min(top_days, len(date) // 24)
-    #     base_colors = cm.rainbow(np.linspace(0, 1, len(tree.name_nodes)))
-    #
-    #     for hierarchy, routine in self.__hierarchical_routines.items:
-    #         for id_cluster, cluster in enumerate(routine):
-    #             starting_points = cluster.get_starting_points()
-    #             fig, ax = plt.subplots(top_days, 1, figsize=figsize)
-    #             gs = gridspec.GridSpec(top_days, 1, figure=fig)
-    #             for i in range(top_days):
-    #                 barcolors = ["gray"] * 24
-    #                 x_hour_minutes = [f"{hour:02}:00" for hour in range(24)]
-    #                 ax = fig.add_subplot(gs[i, 0])
-    #                 for sp in starting_points:
-    #                     if i * 24 <= sp < (i + 1) * 24:
-    #                         ax.axvline(x=sp - i * 24, color=base_colors[tree.get_index(cluster)-1], linestyle="--", linewidth=vline_width)
-    #                         for k in range(cluster.length_cluster_subsequences):
-    #                             if sp - i * 24 + k < 24:
-    #                                 ax.text(sp - i * 24 + k - 0.05, self.time_series[sp + k] - 0.8,
-    #                                         s=f"{self.time_series[sp + k]}", fontsize=coloured_text_fontsize,
-    #                                         backgroundcolor="white", color=base_colors[tree.get_index(cluster)-1])
-    #                                 barcolors[sp - i * 24 + k] = base_colors[tree.get_index(cluster)-1]
-    #
-    #                 ax.bar(np.arange(0, 24, 1), self.time_series[i * 24:(i + 1) * 24],
-    #                        color=barcolors, edgecolor="black", linewidth=bars_linewidth)
-    #
-    #                 ax.set_title(
-    #                     f"Node: {hierarchy}-{id_cluster + 1}; Date {date[i * 24].year} / {date[i * 24].month} / {date[i * 24].day}",
-    #                     fontsize=title_fontsize)
-    #                 ax.set_xlabel("Time", fontsize=15)
-    #                 ax.set_ylabel("N minutes", fontsize=15)
-    #
-    #                 ax.set_xticks(np.arange(0, 24, 2),
-    #                               labels=[x for idx, x in enumerate(x_hour_minutes) if idx % 2 == 0],
-    #                               rotation=90)
-    #                 if show_grid:
-    #                     ax.grid(True)
-    #
-    #                 ax.set_ylim(0, 75)
-    #                 ax.set_xlim(-1, 25)
-    #
-    #                 # Annotate height of the not colored bars
-    #                 if show_background_annotations:
-    #                     for k in range(24):
-    #                         if not isinstance(barcolors[k], np.ndarray):
-    #                             ax.text(k - 0.05, self.time_series[i * 24 + k] + 0.8,
-    #                                     s=f"{self.time_series[i * 24 + k]}", fontsize=text_fontsize,
-    #                                     color="black")
-    #
-    #             plt.tight_layout()
-    #
-    #             if save_dir is not None:
-    #                 plt.savefig(f"{save_dir}/node_{hierarchy}-{id_cluster + 1}.png")
-    #
-    #             plt.show()

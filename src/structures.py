@@ -5216,14 +5216,3 @@ class ClusterTree:
             plt.show()
 
         plt.close()
-
-
-if __name__=="__main__":
-    sequence1 = Sequence(Subsequence(np.array([1, 2, 3, 4]), datetime.date(2021, 1, 1), 0))
-    sequence1.add_sequence(Subsequence(np.array([2, 3, 4, 5]), datetime.date(2021, 1, 2), 4))
-    sequence2 = Sequence(Subsequence(np.array([2, 3, 4, 5]), datetime.date(2021, 1, 2), 4))
-    sequence2.add_sequence(Subsequence(np.array([3, 4, 5, 6]), datetime.date(2021, 1, 3), 8))
-    cluster1 = Cluster(np.array([1, 2, 3, 4]), sequence1)
-    cluster2 = Cluster(np.array([2, 3, 4, 5]), sequence2)
-
-    print(cluster1 + cluster2)
