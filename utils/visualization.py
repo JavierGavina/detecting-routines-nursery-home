@@ -1,3 +1,13 @@
+"""
+This module contains functions to visualize the results of the DRGS model and the ground truth of the activities in the room.
+
+Public Functions:
+----------------
+
+- ``plot_quarters_groundtruth``: Plot the time series of a room in quarters with the ground truth of the activities
+- ``save_results_plot``: Save the results of the DRGS model in a directory
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
@@ -103,7 +113,41 @@ def plot_quarters_groundtruth(*, time_series: pd.Series,
     plt.close()
 
 
-def save_results_plot(*, drgs_fitted: DRGS, room_routines: str, user: str, dificulty: str, room: str):
+def save_results_plot(*,
+                      drgs_fitted: DRGS,
+                      room_routines: str,
+                      user: str,
+                      dificulty: str,
+                      room: str,
+                      figsize_cluster: tuple[int, int] = (15, 23),
+                      figsize_tree: tuple[int, int] = (18, 7),
+                      show_plot: bool = False,
+                      format: str = "pdf",
+                      top_days: int = 7):
+
+    """
+    Save the results of the DRGS model in a directory
+
+    Parameters:
+        drgs_fitted: ``DRGS``: Fitted DRGS model
+        room_routines: ``str``: Path to save the results
+        user: ``str``: User of the data
+        dificulty: ``str``: Dificulty of the data
+        room: ``str``: Room of the data
+        figsize_cluster: ``tuple[int, int]``: Size of the cluster plot. Default (15, 23)
+        figsize_tree: ``tuple[int, int]``: Size of the tree plot. Default (18, 7)
+        show_plot: ``bool``: Show the plot. Default False
+        format: ``str``: Format to save the plot. Default "pdf"
+        top_days: ``int``: Number of days to plot. Default 7
+
+    Raises:
+        ValueError: If the format is not one of pdf, png or svg
+        ValueError: If DRGS is not fitted
+    """
+
+    if format not in ["pdf", "png", "svg"]:
+        raise ValueError(f"Format must be one of pdf, png or svg. Got {format}")
+
     if not drgs_fitted.is_fitted():
         raise ValueError("DRGS must be fitted to save the results")
 
@@ -116,12 +160,12 @@ def save_results_plot(*, drgs_fitted: DRGS, room_routines: str, user: str, dific
     path_out = f"{room_routines}/{room}"
     os.makedirs(path_out, exist_ok=True)
     xlim = ("09:30", "20:00") if room != "Room" else None
-    drgs_fitted.results_per_quarter_hour(top_days=7, figsize=(15, 23), save_dir=path_out,
+    drgs_fitted.results_per_quarter_hour(top_days=top_days, figsize=figsize_cluster, save_dir=path_out,
                                          bars_linewidth=2, show_background_annotations=True,
-                                         show_plot=False, format="pdf", xlim=xlim)
+                                         show_plot=show_plot, format=format, xlim=xlim)
 
     tree = drgs_fitted.convert_to_cluster_tree()
     tree.plot_tree(title=f"Result Tree dificulty {dificulty}",
-                   show_plot=False,
-                   save_dir=f"{path_out}/final_tree_quarters.pdf",
-                   figsize=(18, 7))
+                   show_plot=show_plot,
+                   save_dir=f"{path_out}/final_tree_quarters.{format}",
+                   figsize=figsize_tree)
